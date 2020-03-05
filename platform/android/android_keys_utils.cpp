@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  config_file.h                                                        */
+/*  android_keys_utils.cpp                                               */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -28,52 +28,16 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef CONFIG_FILE_H
-#define CONFIG_FILE_H
+#include "android_keys_utils.h"
 
-#include "core/ordered_hash_map.h"
-#include "core/os/file_access.h"
-#include "core/reference.h"
-#include "core/variant_parser.h"
+unsigned int android_get_keysym(unsigned int p_code) {
+	for (int i = 0; _ak_to_keycode[i].keysym != KEY_UNKNOWN; i++) {
 
-class ConfigFile : public Reference {
+		if (_ak_to_keycode[i].keycode == p_code) {
 
-	GDCLASS(ConfigFile, Reference);
+			return _ak_to_keycode[i].keysym;
+		}
+	}
 
-	OrderedHashMap<String, OrderedHashMap<String, Variant> > values;
-
-	PackedStringArray _get_sections() const;
-	PackedStringArray _get_section_keys(const String &p_section) const;
-	Error _internal_load(const String &p_path, FileAccess *f);
-	Error _internal_save(FileAccess *file);
-
-	Error _parse(const String &p_path, VariantParser::Stream *p_stream);
-
-protected:
-	static void _bind_methods();
-
-public:
-	void set_value(const String &p_section, const String &p_key, const Variant &p_value);
-	Variant get_value(const String &p_section, const String &p_key, Variant p_default = Variant()) const;
-
-	bool has_section(const String &p_section) const;
-	bool has_section_key(const String &p_section, const String &p_key) const;
-
-	void get_sections(List<String> *r_sections) const;
-	void get_section_keys(const String &p_section, List<String> *r_keys) const;
-
-	void erase_section(const String &p_section);
-	void erase_section_key(const String &p_section, const String &p_key);
-
-	Error save(const String &p_path);
-	Error load(const String &p_path);
-	Error parse(const String &p_data);
-
-	Error load_encrypted(const String &p_path, const Vector<uint8_t> &p_key);
-	Error load_encrypted_pass(const String &p_path, const String &p_pass);
-
-	Error save_encrypted(const String &p_path, const Vector<uint8_t> &p_key);
-	Error save_encrypted_pass(const String &p_path, const String &p_pass);
-};
-
-#endif // CONFIG_FILE_H
+	return KEY_UNKNOWN;
+}
