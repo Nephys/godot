@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  semaphore_windows.h                                                  */
+/*  vk_renderer_jni.cpp                                                  */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -28,31 +28,31 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#ifndef SEMAPHORE_WINDOWS_H
-#define SEMAPHORE_WINDOWS_H
+#include "vk_renderer_jni.h"
 
-#include "core/os/semaphore.h"
+extern "C" {
 
-#ifdef WINDOWS_ENABLED
+JNIEXPORT void JNICALL Java_org_godotengine_godot_vulkan_VkRenderer_nativeOnVkSurfaceCreated(JNIEnv *env, jobject obj, jobject j_surface) {
+	// TODO: complete
+}
 
-#include <windows.h>
+JNIEXPORT void JNICALL Java_org_godotengine_godot_vulkan_VkRenderer_nativeOnVkSurfaceChanged(JNIEnv *env, jobject object, jobject j_surface, jint width, jint height) {
+	// TODO: complete
+}
 
-class SemaphoreWindows : public SemaphoreOld {
+JNIEXPORT void JNICALL Java_org_godotengine_godot_vulkan_VkRenderer_nativeOnVkResume(JNIEnv *env, jobject obj) {
+	// TODO: complete
+}
 
-	mutable HANDLE semaphore;
+JNIEXPORT void JNICALL Java_org_godotengine_godot_vulkan_VkRenderer_nativeOnVkDrawFrame(JNIEnv *env, jobject obj) {
+	// TODO: complete
+}
 
-	static SemaphoreOld *create_semaphore_windows();
+JNIEXPORT void JNICALL Java_org_godotengine_godot_vulkan_VkRenderer_nativeOnVkPause(JNIEnv *env, jobject obj) {
+	// TODO: complete
+}
 
-public:
-	virtual Error wait();
-	virtual Error post();
-	virtual int get() const;
-
-	static void make_default();
-	SemaphoreWindows();
-
-	~SemaphoreWindows();
-};
-
-#endif
-#endif
+JNIEXPORT void JNICALL Java_org_godotengine_godot_vulkan_VkRenderer_nativeOnVkDestroy(JNIEnv *env, jobject obj) {
+	// TODO: complete
+}
+}

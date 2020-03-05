@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  semaphore_windows.cpp                                                */
+/*  VkRenderer.kt                                                        */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -28,71 +28,72 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-#include "semaphore_windows.h"
+@file:JvmName("VkRenderer")
+package org.godotengine.godot.vulkan
 
-#if defined(WINDOWS_ENABLED)
+import android.view.Surface
 
-#include "core/os/memory.h"
+/**
+ * Responsible to setting up and driving the Vulkan rendering logic.
+ *
+ * <h3>Threading</h3>
+ * The renderer will be called on a separate thread, so that rendering
+ * performance is decoupled from the UI thread. Clients typically need to
+ * communicate with the renderer from the UI thread, because that's where
+ * input events are received. Clients can communicate using any of the
+ * standard Java techniques for cross-thread communication, or they can
+ * use the  [VkSurfaceView.queueOnVkThread] convenience method.
+ *
+ * @see [VkSurfaceView.startRenderer]
+ */
+internal class VkRenderer {
 
-Error SemaphoreWindows::wait() {
-
-	WaitForSingleObjectEx(semaphore, INFINITE, false);
-	return OK;
-}
-Error SemaphoreWindows::post() {
-
-	ReleaseSemaphore(semaphore, 1, NULL);
-	return OK;
-}
-int SemaphoreWindows::get() const {
-	long previous;
-	switch (WaitForSingleObjectEx(semaphore, 0, false)) {
-		case WAIT_OBJECT_0: {
-			ERR_FAIL_COND_V(!ReleaseSemaphore(semaphore, 1, &previous), -1);
-			return previous + 1;
-		} break;
-		case WAIT_TIMEOUT: {
-			return 0;
-		} break;
-		default: {
-		}
+	/**
+	 * Called when the surface is created and signals the beginning of rendering.
+	 */
+	fun onVkSurfaceCreated(surface: Surface) {
+		nativeOnVkSurfaceCreated(surface)
 	}
 
-	ERR_FAIL_V(-1);
+	/**
+	 * Called after the surface is created and whenever its size changes.
+	 */
+	fun onVkSurfaceChanged(surface: Surface, width: Int, height: Int) {
+		nativeOnVkSurfaceChanged(surface, width, height)
+	}
+
+	/**
+	 * Called to draw the current frame.
+	 */
+	fun onVkDrawFrame() {
+		nativeOnVkDrawFrame()
+	}
+
+	/**
+	 * Called when the rendering thread is resumed.
+	 */
+	fun onVkResume() {
+		nativeOnVkResume()
+	}
+
+	/**
+	 * Called when the rendering thread is paused.
+	 */
+	fun onVkPause() {
+		nativeOnVkPause()
+	}
+
+	/**
+	 * Called when the rendering thread is destroyed and used as signal to tear down the Vulkan logic.
+	 */
+	fun onVkDestroy() {
+		nativeOnVkDestroy()
+	}
+
+	private external fun nativeOnVkSurfaceCreated(surface: Surface)
+	private external fun nativeOnVkSurfaceChanged(surface: Surface, width: Int, height: Int)
+	private external fun nativeOnVkResume()
+	private external fun nativeOnVkDrawFrame()
+	private external fun nativeOnVkPause()
+	private external fun nativeOnVkDestroy()
 }
-
-SemaphoreOld *SemaphoreWindows::create_semaphore_windows() {
-
-	return memnew(SemaphoreWindows);
-}
-
-void SemaphoreWindows::make_default() {
-
-	create_func = create_semaphore_windows;
-}
-
-SemaphoreWindows::SemaphoreWindows() {
-
-#ifdef UWP_ENABLED
-	semaphore = CreateSemaphoreEx(
-			NULL,
-			0,
-			0xFFFFFFF, //wathever
-			NULL,
-			0,
-			SEMAPHORE_ALL_ACCESS);
-#else
-	semaphore = CreateSemaphore(
-			NULL,
-			0,
-			0xFFFFFFF, //wathever
-			NULL);
-#endif
-}
-
-SemaphoreWindows::~SemaphoreWindows() {
-
-	CloseHandle(semaphore);
-}
-
-#endif
