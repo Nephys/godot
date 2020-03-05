@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    height="16"
@@ -12,7 +14,7 @@
    width="16"
    version="1.1"
    id="svg4562"
-   sodipodi:docname="icon_godot.svg"
+   sodipodi:docname="icon.svg"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
    inkscape:export-filename="I:\Games\Engines\luddith-dev\main\app_icon.png"
    inkscape:export-xdpi="768"
@@ -25,12 +27,43 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <defs
-     id="defs4566" />
+     id="defs4566">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient2355">
+      <stop
+         style="stop-color:#00ffbe;stop-opacity:1"
+         offset="0"
+         id="stop2351" />
+      <stop
+         style="stop-color:#0055c9;stop-opacity:1"
+         offset="1"
+         id="stop2353" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient2333"
+       osb:paint="solid">
+      <stop
+         style="stop-color:#800000;stop-opacity:1;"
+         offset="0"
+         id="stop2331" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2355"
+       id="linearGradient2361"
+       x1="188.69162"
+       y1="181.98169"
+       x2="279.32034"
+       y2="157.69778"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.0960639,0,0,1.0960639,-22.479534,-16.315481)" />
+  </defs>
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -44,13 +77,13 @@
      inkscape:window-height="1027"
      id="namedview4564"
      showgrid="false"
-     inkscape:zoom="18.959301"
-     inkscape:cx="8.5425156"
-     inkscape:cy="-1.0000848"
+     inkscape:zoom="37.918602"
+     inkscape:cx="10.063542"
+     inkscape:cy="9.4315701"
      inkscape:window-x="1912"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg4562" />
+     inkscape:current-layer="layer1" />
   <g
      inkscape:groupmode="layer"
      id="layer1"
@@ -58,53 +91,9 @@
      style="display:inline"
      transform="matrix(0.08368239,0,0,0.08368239,-11.58218,-6.2125947)">
     <path
-       style="display:inline;fill:#82502d;fill-opacity:1;stroke:none;stroke-width:11.94994736px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 234.00599,99.575714 -64.29913,28.508556 -4.28912,4.31732 v 76.51915 l 65.73366,30.04445 5.70994,3.7e-4 65.7329,-30.04482 v -76.51953 l -4.28911,-4.31694 -24.6176,-10.91465 -6.85071,-3.03862 -12.12933,-5.37732 -6.85072,-3.03747 z"
-       id="path4638"
+       style="opacity:1;fill:url(#linearGradient2361);fill-opacity:1;stroke:none;stroke-width:11.05414104;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       d="m 304.77567,76.3503 -45.11188,33.27511 -0.0313,-0.0181 -27.57587,20.33974 24.33469,-21.5635 c -12.61586,-4.62174 -26.34911,-5.25062 -39.33523,-1.80187 -34.93644,9.3612 -55.66927,45.27152 -46.30809,80.20796 2.74102,10.15928 7.88974,19.50848 15.01015,27.25599 l 28.38091,-38.88258 -29.80047,7.985 z m -22.5218,49.2835 -28.38091,38.88257 29.80045,-7.98502 -120.43711,106.79781 45.11189,-33.27511 0.0313,0.0181 27.57588,-20.33977 -24.33469,21.56353 c 12.61633,4.62094 26.3491,5.25058 39.33523,1.80182 34.93644,-9.36116 55.66927,-45.27148 46.30808,-80.20794 -2.74104,-10.15927 -7.88973,-19.50848 -15.01014,-27.25598 z"
+       id="path839"
        inkscape:connector-curvature="0" />
-  </g>
-  <g
-     id="g4628"
-     transform="matrix(0.08368239,0,0,0.08368239,-11.58218,-6.2125947)"
-     style="display:inline"
-     inkscape:label="g4628">
-    <g
-       id="g4572">
-      <path
-         id="path4570"
-         d="M 306.57626,125.31312 235.19782,93.668024 c -0.75899,-0.337201 -1.62543,-0.337201 -2.38442,0 l -71.37769,31.645096 c -1.21164,0.53724 -1.7283,1.64067 -1.7283,3.04434 v 82.39788 c 0,1.11753 0.65193,2.13256 1.66848,2.59664 l 71.44285,32.65365 c 0.37911,0.17298 0.78299,0.25871 1.18687,0.25871 0.45417,0 0.77423,-0.0511 1.1842,-0.26404 7.7e-4,0.002 71.44627,-32.6487 71.44627,-32.6487 1.01618,-0.46484 1.66848,-1.47988 1.66848,-2.59664 v -82.3975 c 0,-1.32937 -0.51628,-2.50748 -1.7283,-3.04434 z M 202.9789,144.90013 c -0.98759,0.47513 -1.61628,1.4753 -1.61628,2.57149 v 27.85549 l -13.95174,-6.58323 v -27.56515 l 67.2966,-32.42505 12.12933,5.37732 z m 31.02709,-45.324416 13.85078,6.140496 -61.86785,29.81011 -16.28206,-7.44205 z M 231.1514,238.96517 165.41774,208.92074 v -76.51915 l 16.28281,7.44243 v 30.70931 c 0,1.10534 0.63745,2.11085 1.63724,2.58179 l 19.66207,9.27932 c 0.38673,0.1825 0.80204,0.27357 1.21697,0.27357 0.53381,0 1.06457,-0.14974 1.52903,-0.44351 0.82643,-0.52466 1.32671,-1.43415 1.32671,-2.41223 v -28.39196 l 24.07883,11.00534 z m 2.85459,-81.49181 -22.56314,-10.31341 62.24467,-29.99033 24.6176,10.91465 z m 68.58825,51.44738 -65.7329,30.04482 v -76.51953 l 65.7329,-30.04482 z"
-         inkscape:connector-curvature="0"
-         style="fill:#afafaf;fill-opacity:0.72361809;stroke-width:0.38101834" />
-    </g>
-    <g
-       id="g4574" />
-    <g
-       id="g4576" />
-    <g
-       id="g4578" />
-    <g
-       id="g4580" />
-    <g
-       id="g4582" />
-    <g
-       id="g4584" />
-    <g
-       id="g4586" />
-    <g
-       id="g4588" />
-    <g
-       id="g4590" />
-    <g
-       id="g4592" />
-    <g
-       id="g4594" />
-    <g
-       id="g4596" />
-    <g
-       id="g4598" />
-    <g
-       id="g4600" />
-    <g
-       id="g4602" />
   </g>
 </svg>
