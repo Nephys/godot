@@ -71,7 +71,7 @@ def update_version(module_version_string=""):
     f.write("#define VERSION_BUILD \"" + str(build_name) + "\"\n")
     f.write("#define VERSION_MODULE_CONFIG \"" + str(version.module_config) + module_version_string + "\"\n")
     f.write("#define VERSION_YEAR " + str(version.year) + "\n")
-    f.write("#define VERSION_WEBSITE \"" + str(version.website) + "\"\n")
+    #f.write("#define VERSION_WEBSITE \"" + str(version.website) + "\"\n")
     f.close()
 
     # NOTE: It is safe to generate this file here, since this is still executed serially
@@ -317,14 +317,23 @@ def no_verbose(sys, env):
         colors['red'] = ''
         colors['end'] = ''
 
-    compile_source_message = '%sCompiling %s==> %s$SOURCE%s' % (colors['blue'], colors['purple'], colors['yellow'], colors['end'])
-    java_compile_source_message = '%sCompiling %s==> %s$SOURCE%s' % (colors['blue'], colors['purple'], colors['yellow'], colors['end'])
-    compile_shared_source_message = '%sCompiling shared %s==> %s$SOURCE%s' % (colors['blue'], colors['purple'], colors['yellow'], colors['end'])
-    link_program_message = '%sLinking Program        %s==> %s$TARGET%s' % (colors['red'], colors['purple'], colors['yellow'], colors['end'])
-    link_library_message = '%sLinking Static Library %s==> %s$TARGET%s' % (colors['red'], colors['purple'], colors['yellow'], colors['end'])
-    ranlib_library_message = '%sRanlib Library         %s==> %s$TARGET%s' % (colors['red'], colors['purple'], colors['yellow'], colors['end'])
-    link_shared_library_message = '%sLinking Shared Library %s==> %s$TARGET%s' % (colors['red'], colors['purple'], colors['yellow'], colors['end'])
-    java_library_message = '%sCreating Java Archive  %s==> %s$TARGET%s' % (colors['red'], colors['purple'], colors['yellow'], colors['end'])
+    #compile_source_message = '%sCompiling %s==> %s$SOURCE%s' % (colors['blue'], colors['purple'], colors['yellow'], colors['end'])
+    #java_compile_source_message = '%sCompiling %s==> %s$SOURCE%s' % (colors['blue'], colors['purple'], colors['yellow'], colors['end'])
+    #compile_shared_source_message = '%sCompiling shared %s==> %s$SOURCE%s' % (colors['blue'], colors['purple'], colors['yellow'], colors['end'])
+    #link_program_message = '%sLinking Program        %s==> %s$TARGET%s' % (colors['red'], colors['purple'], colors['yellow'], colors['end'])
+    #link_library_message = '%sLinking Static Library %s==> %s$TARGET%s' % (colors['red'], colors['purple'], colors['yellow'], colors['end'])
+    #ranlib_library_message = '%sRanlib Library         %s==> %s$TARGET%s' % (colors['red'], colors['purple'], colors['yellow'], colors['end'])
+    #link_shared_library_message = '%sLinking Shared Library %s==> %s$TARGET%s' % (colors['red'], colors['purple'], colors['yellow'], colors['end'])
+    #java_library_message = '%sCreating Java Archive  %s==> %s$TARGET%s' % (colors['red'], colors['purple'], colors['yellow'], colors['end'])
+
+    compile_source_message =            '%sCompiling                %s[%s$SOURCE%s]%s' % (colors['blue'], colors['purple'], colors['yellow'], colors['purple'], colors['end'])
+    java_compile_source_message =       '%sCompiling                %s[%s$SOURCE%s]%s' % (colors['blue'], colors['purple'], colors['yellow'], colors['purple'], colors['end'])
+    compile_shared_source_message =     '%sCompiling shared         %s[%s$SOURCE%s]%s' % (colors['blue'], colors['purple'], colors['yellow'], colors['purple'], colors['end'])
+    link_program_message =              '%sLinking Program          %s[%s$TARGET%s]%s' % (colors['green'], colors['purple'], colors['yellow'], colors['purple'], colors['end'])
+    link_library_message =              '%sLinking Static Library   %s[%s$TARGET%s]%s' % (colors['green'], colors['purple'], colors['yellow'], colors['purple'], colors['end'])
+    ranlib_library_message =            '%sRanlib Library           %s[%s$TARGET%s]%s' % (colors['green'], colors['purple'], colors['yellow'], colors['purple'], colors['end'])
+    link_shared_library_message =       '%sLinking Shared Library   %s[%s$TARGET%s]%s' % (colors['green'], colors['purple'], colors['yellow'], colors['purple'], colors['end'])
+    java_library_message =              '%sCreating Java Archive    %s[%s$TARGET%s]%s' % (colors['green'], colors['purple'], colors['yellow'], colors['purple'], colors['end'])
 
     env.Append(CXXCOMSTR=[compile_source_message])
     env.Append(CCCOMSTR=[compile_source_message])

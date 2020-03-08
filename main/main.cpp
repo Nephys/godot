@@ -225,10 +225,11 @@ void finalize_navigation_server() {
 
 void Main::print_help(const char *p_binary) {
 
-	print_line(String(VERSION_NAME) + " v" + get_full_version_string() + " - " + String(VERSION_WEBSITE));
-	OS::get_singleton()->print("Free and open source software under the terms of the MIT license.\n");
+	//print_line(String(VERSION_NAME) + " v" + get_full_version_string() + " - " + String(VERSION_WEBSITE));
+	print_line(String(VERSION_NAME) + " v" + get_full_version_string());
+	/*OS::get_singleton()->print("Free and open source software under the terms of the MIT license.\n");
 	OS::get_singleton()->print("(c) 2007-2020 Juan Linietsky, Ariel Manzur.\n");
-	OS::get_singleton()->print("(c) 2014-2020 Godot Engine contributors.\n");
+	OS::get_singleton()->print("(c) 2014-2020 Godot Engine contributors.\n");*/
 	OS::get_singleton()->print("\n");
 	OS::get_singleton()->print("Usage: %s [options] [path to scene or 'project.godot' file]\n", p_binary);
 	OS::get_singleton()->print("\n");
@@ -1215,7 +1216,8 @@ Error Main::setup2(Thread::ID p_main_tid_override) {
 	preregister_server_types();
 
 	// Print engine name and version
-	print_line(String(VERSION_NAME) + " v" + get_full_version_string() + " - " + String(VERSION_WEBSITE));
+	//print_line(String(VERSION_NAME) + " v" + get_full_version_string() + " - " + String(VERSION_WEBSITE));
+	print_line(String(VERSION_NAME) + " v" + get_full_version_string());
 
 	if (p_main_tid_override) {
 		Thread::_main_thread_id = p_main_tid_override;

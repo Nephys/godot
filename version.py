@@ -6,4 +6,3 @@ patch = 0
 status = "dev"
 module_config = ""
 year = 2020
-website = "https://godotengine.org"
