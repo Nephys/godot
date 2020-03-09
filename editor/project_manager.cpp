@@ -1826,14 +1826,14 @@ void ProjectManager::_notification(int p_what) {
 		} break;
 		case NOTIFICATION_RESIZED: {
 
-			if (open_templates->is_visible()) {
+			/*if (open_templates->is_visible()) {
 				open_templates->popup_centered_minsize();
-			}
+			}*/
 		} break;
 		case NOTIFICATION_READY: {
 
-			if (_project_list->get_project_count() == 0 && StreamPeerSSL::is_available())
-				open_templates->popup_centered_minsize();
+			/*if (_project_list->get_project_count() == 0 && StreamPeerSSL::is_available())
+				open_templates->popup_centered_minsize();*/
 
 			if (_project_list->get_project_count() >= 1) {
 				// Focus on the search box immediately to allow the user
@@ -2584,14 +2584,14 @@ ProjectManager::ProjectManager() {
 
 	tree_vb->add_spacer();
 
-	if (StreamPeerSSL::is_available()) {
+	/*if (StreamPeerSSL::is_available()) {
 		asset_library = memnew(EditorAssetLibrary(true));
 		asset_library->set_name(TTR("Templates"));
 		tabs->add_child(asset_library);
 		asset_library->connect("install_asset", callable_mp(this, &ProjectManager::_install_project));
 	} else {
 		WARN_PRINT("Asset Library not available, as it requires SSL to work.");
-	}
+	}*/
 
 	HBoxContainer *settings_hb = memnew(HBoxContainer);
 	settings_hb->set_alignment(BoxContainer::ALIGN_END);
@@ -2700,11 +2700,11 @@ ProjectManager::ProjectManager() {
 	dialog_error = memnew(AcceptDialog);
 	gui_base->add_child(dialog_error);
 
-	open_templates = memnew(ConfirmationDialog);
+	/*open_templates = memnew(ConfirmationDialog);
 	open_templates->set_text(TTR("You currently don't have any projects.\nWould you like to explore official example projects in the Asset Library?"));
 	open_templates->get_ok()->set_text(TTR("Open Asset Library"));
 	open_templates->connect("confirmed", callable_mp(this, &ProjectManager::_open_asset_library));
-	add_child(open_templates);
+	add_child(open_templates);*/
 }
 
 ProjectManager::~ProjectManager() {
