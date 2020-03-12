@@ -5553,7 +5553,8 @@ EditorNode::EditorNode() {
 	}
 
 	// Define a minimum window size to prevent UI elements from overlapping or being cut off
-	OS::get_singleton()->set_min_window_size(Size2(1024, 600) * EDSCALE);
+	//OS::get_singleton()->set_min_window_size(Size2(1024, 600) * EDSCALE);
+	OS::get_singleton()->set_min_window_size(Size2(1280, 720) * EDSCALE);
 
 	ResourceLoader::set_abort_on_missing_resources(false);
 	FileDialog::set_default_show_hidden_files(EditorSettings::get_singleton()->get("filesystem/file_dialog/show_hidden_files"));
@@ -5676,7 +5677,8 @@ EditorNode::EditorNode() {
 	ClassDB::set_class_enabled("RootMotionView", true);
 
 	//defs here, use EDITOR_GET in logic
-	EDITOR_DEF_RST("interface/scene_tabs/always_show_close_button", false);
+	//EDITOR_DEF_RST("interface/scene_tabs/always_show_close_button", false);
+	EDITOR_DEF_RST("interface/scene_tabs/always_show_close_button", true);
 	EDITOR_DEF_RST("interface/scene_tabs/resize_if_many_tabs", true);
 	EDITOR_DEF_RST("interface/scene_tabs/minimum_width", 50);
 	EDITOR_DEF("run/output/always_clear_output_on_play", true);
@@ -5687,7 +5689,8 @@ EditorNode::EditorNode() {
 	EDITOR_DEF("interface/editor/quit_confirmation", true);
 	EDITOR_DEF("interface/editor/show_update_spinner", false);
 	EDITOR_DEF("interface/editor/update_continuously", false);
-	EDITOR_DEF_RST("interface/scene_tabs/restore_scenes_on_load", false);
+	//EDITOR_DEF_RST("interface/scene_tabs/restore_scenes_on_load", false);
+	EDITOR_DEF_RST("interface/scene_tabs/restore_scenes_on_load", true);
 	EDITOR_DEF_RST("interface/scene_tabs/show_thumbnail_on_hover", true);
 	EDITOR_DEF_RST("interface/inspector/capitalize_properties", true);
 	EDITOR_DEF_RST("interface/inspector/default_float_step", 0.001);
