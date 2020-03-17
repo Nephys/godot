@@ -1773,7 +1773,8 @@ void ProjectSettingsEditor::_bind_methods() {
 ProjectSettingsEditor::ProjectSettingsEditor(EditorData *p_data) {
 
 	singleton = this;
-	set_title(TTR("Project Settings (project.godot)"));
+	//set_title(TTR("Project Settings (project.godot)"));
+	set_title(TTR("Project Settings (project.blz)"));
 	set_resizable(true);
 	undo_redo = &p_data->get_undo_redo();
 	data = p_data;

@@ -683,7 +683,8 @@ void EditorFileSystem::_scan_new_dir(EditorFileSystemDirectory *p_dir, DirAccess
 			if (f.begins_with(".")) // Ignore special and . / ..
 				continue;
 
-			if (FileAccess::exists(cd.plus_file(f).plus_file("project.godot"))) // skip if another project inside this
+			//if (FileAccess::exists(cd.plus_file(f).plus_file("project.godot"))) // skip if another project inside this
+			if (FileAccess::exists(cd.plus_file(f).plus_file("project.blz"))) // skip if another project inside this
 				continue;
 			if (FileAccess::exists(cd.plus_file(f).plus_file(".gdignore"))) // skip if another project inside this
 				continue;
@@ -885,7 +886,8 @@ void EditorFileSystem::_scan_fs_changes(EditorFileSystemDirectory *p_dir, const 
 				int idx = p_dir->find_dir_index(f);
 				if (idx == -1) {
 
-					if (FileAccess::exists(cd.plus_file(f).plus_file("project.godot"))) // skip if another project inside this
+					//if (FileAccess::exists(cd.plus_file(f).plus_file("project.godot"))) // skip if another project inside this
+					if (FileAccess::exists(cd.plus_file(f).plus_file("project.blz"))) // skip if another project inside this
 						continue;
 					if (FileAccess::exists(cd.plus_file(f).plus_file(".gdignore"))) // skip if another project inside this
 						continue;

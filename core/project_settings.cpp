@@ -327,7 +327,8 @@ Error ProjectSettings::_setup(const String &p_path, const String &p_main_pack, b
 
 	if (FileAccessNetworkClient::get_singleton()) {
 
-		Error err = _load_settings_text_or_binary("res://project.godot", "res://project.binary");
+		//Error err = _load_settings_text_or_binary("res://project.godot", "res://project.binary");
+		Error err = _load_settings_text_or_binary("res://project.blz", "res://project.binary");
 		if (err == OK) {
 			// Optional, we don't mind if it fails
 			_load_settings_text("res://override.cfg");
@@ -342,7 +343,8 @@ Error ProjectSettings::_setup(const String &p_path, const String &p_main_pack, b
 		bool ok = _load_resource_pack(p_main_pack);
 		ERR_FAIL_COND_V_MSG(!ok, ERR_CANT_OPEN, "Cannot open resource pack '" + p_main_pack + "'.");
 
-		Error err = _load_settings_text_or_binary("res://project.godot", "res://project.binary");
+		//Error err = _load_settings_text_or_binary("res://project.godot", "res://project.binary");
+		Error err = _load_settings_text_or_binary("res://project.blz", "res://project.binary");
 		if (err == OK) {
 			// Load override from location of the main pack
 			// Optional, we don't mind if it fails
@@ -401,7 +403,8 @@ Error ProjectSettings::_setup(const String &p_path, const String &p_main_pack, b
 
 		// If we opened our package, try and load our project
 		if (found) {
-			Error err = _load_settings_text_or_binary("res://project.godot", "res://project.binary");
+			//Error err = _load_settings_text_or_binary("res://project.godot", "res://project.binary");
+			Error err = _load_settings_text_or_binary("res://project.blz", "res://project.binary");
 			if (err == OK) {
 				// Load override from location of executable
 				// Optional, we don't mind if it fails
@@ -421,7 +424,8 @@ Error ProjectSettings::_setup(const String &p_path, const String &p_main_pack, b
 			resource_path = resource_path.substr(0, resource_path.length() - 1); // chop end
 		}
 
-		Error err = _load_settings_text_or_binary("res://project.godot", "res://project.binary");
+		//Error err = _load_settings_text_or_binary("res://project.godot", "res://project.binary");
+		Error err = _load_settings_text_or_binary("res://project.blz", "res://project.binary");
 		if (err == OK) {
 			// Optional, we don't mind if it fails
 			_load_settings_text("res://override.cfg");
@@ -442,7 +446,8 @@ Error ProjectSettings::_setup(const String &p_path, const String &p_main_pack, b
 	Error err;
 
 	while (true) {
-		err = _load_settings_text_or_binary(current_dir.plus_file("project.godot"), current_dir.plus_file("project.binary"));
+		//err = _load_settings_text_or_binary(current_dir.plus_file("project.godot"), current_dir.plus_file("project.binary"));
+		err = _load_settings_text_or_binary(current_dir.plus_file("project.blz"), current_dir.plus_file("project.binary"));
 		if (err == OK) {
 			// Optional, we don't mind if it fails
 			_load_settings_text(current_dir.plus_file("override.cfg"));
@@ -649,7 +654,8 @@ void ProjectSettings::clear(const String &p_name) {
 
 Error ProjectSettings::save() {
 
-	return save_custom(get_resource_path().plus_file("project.godot"));
+	//return save_custom(get_resource_path().plus_file("project.godot"));
+	return save_custom(get_resource_path().plus_file("project.blz"));
 }
 
 Error ProjectSettings::_save_settings_binary(const String &p_file, const Map<String, List<String> > &props, const CustomMap &p_custom, const String &p_custom_features) {
@@ -745,7 +751,8 @@ Error ProjectSettings::_save_settings_text(const String &p_file, const Map<Strin
 	Error err;
 	FileAccess *file = FileAccess::open(p_file, FileAccess::WRITE, &err);
 
-	ERR_FAIL_COND_V_MSG(err != OK, err, "Couldn't save project.godot - " + p_file + ".");
+	//ERR_FAIL_COND_V_MSG(err != OK, err, "Couldn't save project.godot - " + p_file + ".");
+	ERR_FAIL_COND_V_MSG(err != OK, err, "Couldn't save project.blz - " + p_file + ".");
 
 	file->store_line("; Engine configuration file.");
 	file->store_line("; It's best edited using the editor UI and not directly,");
@@ -867,7 +874,8 @@ Error ProjectSettings::save_custom(const String &p_path, const CustomMap &p_cust
 		custom_features += f;
 	}
 
-	if (p_path.ends_with(".godot"))
+	//if (p_path.ends_with(".godot"))
+	if (p_path.ends_with(".blz"))
 		return _save_settings_text(p_path, props, p_custom, custom_features);
 	else if (p_path.ends_with(".binary"))
 		return _save_settings_binary(p_path, props, p_custom, custom_features);
