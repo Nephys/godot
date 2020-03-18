@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  PaymentsCache.java                                                   */
+/*  string_name_glue.h                                                   */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -28,45 +28,27 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-package org.godotengine.godot.payments;
+#ifndef STRING_NAME_GLUE_H
+#define STRING_NAME_GLUE_H
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.util.Log;
+#ifdef MONO_GLUE_ENABLED
 
-public class PaymentsCache {
+#include "core/string_name.h"
 
-	public Context context;
+#include "../mono_gd/gd_mono_marshal.h"
 
-	public PaymentsCache(Context context) {
-		this.context = context;
-	}
+StringName *godot_icall_StringName_Ctor(MonoString *p_path);
 
-	public void setConsumableFlag(String set, String sku, Boolean flag) {
-		SharedPreferences sharedPref = context.getSharedPreferences("consumables_" + set, Context.MODE_PRIVATE);
-		SharedPreferences.Editor editor = sharedPref.edit();
-		editor.putBoolean(sku, flag);
-		editor.apply();
-	}
+void godot_icall_StringName_Dtor(StringName *p_ptr);
 
-	public boolean getConsumableFlag(String set, String sku) {
-		SharedPreferences sharedPref = context.getSharedPreferences(
-				"consumables_" + set, Context.MODE_PRIVATE);
-		return sharedPref.getBoolean(sku, false);
-	}
+MonoString *godot_icall_StringName_operator_String(StringName *p_np);
 
-	public void setConsumableValue(String set, String sku, String value) {
-		SharedPreferences sharedPref = context.getSharedPreferences("consumables_" + set, Context.MODE_PRIVATE);
-		SharedPreferences.Editor editor = sharedPref.edit();
-		editor.putString(sku, value);
-		//Log.d("XXX", "Setting asset: consumables_" + set + ":" + sku);
-		editor.apply();
-	}
+MonoBoolean godot_icall_StringName_is_empty(StringName *p_ptr);
 
-	public String getConsumableValue(String set, String sku) {
-		SharedPreferences sharedPref = context.getSharedPreferences(
-				"consumables_" + set, Context.MODE_PRIVATE);
-		//Log.d("XXX", "Getting asset: consumables_" + set + ":" + sku);
-		return sharedPref.getString(sku, null);
-	}
-}
+// Register internal calls
+
+void godot_register_string_name_icalls();
+
+#endif // MONO_GLUE_ENABLED
+
+#endif // STRING_NAME_GLUE_H

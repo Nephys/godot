@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  ConsumeTask.java                                                     */
+/*  PaymentsCache.java                                                   */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -28,89 +28,44 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-package org.godotengine.godot.payments;
+package org.godotengine.godot.plugin.payment;
 
 import android.content.Context;
-import android.os.AsyncTask;
-import android.os.RemoteException;
-import com.android.vending.billing.IInAppBillingService;
-import java.lang.ref.WeakReference;
+import android.content.SharedPreferences;
 
-abstract public class ConsumeTask {
+public class PaymentsCache {
 
-	private Context context;
-	private IInAppBillingService mService;
+	public Context context;
 
-	private String mSku;
-	private String mToken;
-
-	private static class ConsumeAsyncTask extends AsyncTask<String, String, String> {
-
-		private WeakReference<ConsumeTask> mTask;
-
-		ConsumeAsyncTask(ConsumeTask consume) {
-			mTask = new WeakReference<>(consume);
-		}
-
-		@Override
-		protected String doInBackground(String... strings) {
-			ConsumeTask consume = mTask.get();
-			if (consume != null) {
-				return consume.doInBackground(strings);
-			}
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(String param) {
-			ConsumeTask consume = mTask.get();
-			if (consume != null) {
-				consume.onPostExecute(param);
-			}
-		}
-	}
-
-	public ConsumeTask(IInAppBillingService mService, Context context) {
+	public PaymentsCache(Context context) {
 		this.context = context;
-		this.mService = mService;
 	}
 
-	public void consume(final String sku) {
-		mSku = sku;
-		PaymentsCache pc = new PaymentsCache(context);
-		Boolean isBlocked = pc.getConsumableFlag("block", sku);
-		mToken = pc.getConsumableValue("token", sku);
-		if (!isBlocked && mToken == null) {
-			// Consuming task is processing
-		} else if (!isBlocked) {
-			return;
-		} else if (mToken == null) {
-			this.error("No token for sku:" + sku);
-			return;
-		}
-		new ConsumeAsyncTask(this).execute();
+	public void setConsumableFlag(String set, String sku, Boolean flag) {
+		SharedPreferences sharedPref = context.getSharedPreferences("consumables_" + set, Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.putBoolean(sku, flag);
+		editor.apply();
 	}
 
-	private String doInBackground(String... params) {
-		try {
-			int response = mService.consumePurchase(3, context.getPackageName(), mToken);
-			if (response == 0 || response == 8) {
-				return null;
-			}
-		} catch (RemoteException e) {
-			return e.getMessage();
-		}
-		return "Some error";
+	public boolean getConsumableFlag(String set, String sku) {
+		SharedPreferences sharedPref = context.getSharedPreferences(
+				"consumables_" + set, Context.MODE_PRIVATE);
+		return sharedPref.getBoolean(sku, false);
 	}
 
-	private void onPostExecute(String param) {
-		if (param == null) {
-			success(new PaymentsCache(context).getConsumableValue("ticket", mSku));
-		} else {
-			error(param);
-		}
+	public void setConsumableValue(String set, String sku, String value) {
+		SharedPreferences sharedPref = context.getSharedPreferences("consumables_" + set, Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.putString(sku, value);
+		//Log.d("XXX", "Setting asset: consumables_" + set + ":" + sku);
+		editor.apply();
 	}
 
-	abstract protected void success(String ticket);
-	abstract protected void error(String message);
+	public String getConsumableValue(String set, String sku) {
+		SharedPreferences sharedPref = context.getSharedPreferences(
+				"consumables_" + set, Context.MODE_PRIVATE);
+		//Log.d("XXX", "Getting asset: consumables_" + set + ":" + sku);
+		return sharedPref.getString(sku, null);
+	}
 }

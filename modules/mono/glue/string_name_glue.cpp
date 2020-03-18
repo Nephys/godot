@@ -1,12 +1,12 @@
 /*************************************************************************/
-/*  GodotPaymentInterface.java                                           */
+/*  string_name_glue.cpp                                                 */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
 /*                      https://godotengine.org                          */
 /*************************************************************************/
-/* Copyright (c) 2007-2019 Juan Linietsky, Ariel Manzur.                 */
-/* Copyright (c) 2014-2019 Godot Engine contributors (cf. AUTHORS.md)    */
+/* Copyright (c) 2007-2020 Juan Linietsky, Ariel Manzur.                 */
+/* Copyright (c) 2014-2020 Godot Engine contributors (cf. AUTHORS.md).   */
 /*                                                                       */
 /* Permission is hereby granted, free of charge, to any person obtaining */
 /* a copy of this software and associated documentation files (the       */
@@ -28,70 +28,34 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-package org.godotengine.godot.payments;
+#include "string_name_glue.h"
 
-public interface GodotPaymentInterface {
-	void purchase(String sku, String transactionId);
+#ifdef MONO_GLUE_ENABLED
 
-	void consumeUnconsumedPurchases();
+#include "core/ustring.h"
 
-	String getSignature();
-
-	void callbackSuccess(String ticket, String signature, String sku);
-
-	void callbackSuccessProductMassConsumed(String ticket, String signature, String sku);
-
-	void callbackSuccessNoUnconsumedPurchases();
-
-	void callbackFailConsume(String message);
-
-	void callbackFail(String message);
-
-	void callbackCancel();
-
-	void callbackAlreadyOwned(String sku);
-
-	int getPurchaseCallbackId();
-
-	void setPurchaseCallbackId(int purchaseCallbackId);
-
-	String getPurchaseValidationUrlPrefix();
-
-	void setPurchaseValidationUrlPrefix(String url);
-
-	String getAccessToken();
-
-	void setAccessToken(String accessToken);
-
-	void setTransactionId(String transactionId);
-
-	String getTransactionId();
-
-	// request purchased items are not consumed
-	void requestPurchased();
-
-	// callback for requestPurchased()
-	void callbackPurchased(String receipt, String signature, String sku);
-
-	void callbackDisconnected();
-
-	void callbackConnected();
-
-	// true if connected, false otherwise
-	boolean isConnected();
-
-	// consume item automatically after purchase. default is true.
-	void setAutoConsume(boolean autoConsume);
-
-	// consume a specific item
-	void consume(String sku);
-
-	// query in app item detail info
-	void querySkuDetails(String[] list);
-
-	void addSkuDetail(String itemJson);
-
-	void completeSkuDetail();
-
-	void errorSkuDetail(String errorMessage);
+StringName *godot_icall_StringName_Ctor(MonoString *p_path) {
+	return memnew(StringName(GDMonoMarshal::mono_string_to_godot(p_path)));
 }
+
+void godot_icall_StringName_Dtor(StringName *p_ptr) {
+	ERR_FAIL_NULL(p_ptr);
+	memdelete(p_ptr);
+}
+
+MonoString *godot_icall_StringName_operator_String(StringName *p_np) {
+	return GDMonoMarshal::mono_string_from_godot(p_np->operator String());
+}
+
+MonoBoolean godot_icall_StringName_is_empty(StringName *p_ptr) {
+	return (MonoBoolean)(p_ptr == StringName());
+}
+
+void godot_register_string_name_icalls() {
+	mono_add_internal_call("Godot.StringName::godot_icall_StringName_Ctor", (void *)godot_icall_StringName_Ctor);
+	mono_add_internal_call("Godot.StringName::godot_icall_StringName_Dtor", (void *)godot_icall_StringName_Dtor);
+	mono_add_internal_call("Godot.StringName::godot_icall_StringName_operator_String", (void *)godot_icall_StringName_operator_String);
+	mono_add_internal_call("Godot.StringName::godot_icall_StringName_is_empty", (void *)godot_icall_StringName_is_empty);
+}
+
+#endif // MONO_GLUE_ENABLED
