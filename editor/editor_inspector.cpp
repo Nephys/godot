@@ -1551,7 +1551,7 @@ void EditorInspector::update_tree() {
 					if (E) {
 						descr = E->get().brief_description;
 					}
-					class_descr_cache[type2] = descr;
+					class_descr_cache[type2] = DTR(descr);
 				}
 
 				category->set_tooltip(p.name + "::" + (class_descr_cache[type2] == "" ? "" : class_descr_cache[type2]));
@@ -1703,10 +1703,22 @@ void EditorInspector::update_tree() {
 				while (F && descr == String()) {
 					for (int i = 0; i < F->get().properties.size(); i++) {
 						if (F->get().properties[i].name == propname.operator String()) {
-							descr = F->get().properties[i].description.strip_edges();
+							descr = DTR(F->get().properties[i].description.strip_edges());
 							break;
 						}
 					}
+
+					Vector<String> slices = propname.operator String().split("/");
+					if (slices.size() == 2 && slices[0].begins_with("custom_")) {
+						// Likely a theme property.
+						for (int i = 0; i < F->get().theme_properties.size(); i++) {
+							if (F->get().theme_properties[i].name == slices[1]) {
+								descr = DTR(F->get().theme_properties[i].description.strip_edges());
+								break;
+							}
+						}
+					}
+
 					if (!F->get().inherits.empty()) {
 						F = dd->class_list.find(F->get().inherits);
 					} else {

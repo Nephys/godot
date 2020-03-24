@@ -3612,6 +3612,7 @@ void EditorNode::register_editor_types() {
 	ClassDB::register_class<ScriptCreateDialog>();
 	ClassDB::register_class<EditorFeatureProfile>();
 	ClassDB::register_class<EditorSpinSlider>();
+	ClassDB::register_virtual_class<FileSystemDock>();
 
 	// FIXME: Is this stuff obsolete, or should it be ported to new APIs?
 	ClassDB::register_class<EditorScenePostImport>();
@@ -6586,6 +6587,18 @@ EditorNode::EditorNode() {
 		particles_mat_convert.instance();
 		resource_conversion_plugins.push_back(particles_mat_convert);
 
+		Ref<ProceduralSkyMaterialConversionPlugin> procedural_sky_mat_convert;
+		procedural_sky_mat_convert.instance();
+		resource_conversion_plugins.push_back(procedural_sky_mat_convert);
+
+		Ref<PanoramaSkyMaterialConversionPlugin> panorama_sky_mat_convert;
+		panorama_sky_mat_convert.instance();
+		resource_conversion_plugins.push_back(panorama_sky_mat_convert);
+
+		Ref<PhysicalSkyMaterialConversionPlugin> physical_sky_mat_convert;
+		physical_sky_mat_convert.instance();
+		resource_conversion_plugins.push_back(physical_sky_mat_convert);
+
 		Ref<VisualShaderConversionPlugin> vshader_convert;
 		vshader_convert.instance();
 		resource_conversion_plugins.push_back(vshader_convert);
@@ -6707,6 +6720,9 @@ EditorNode::EditorNode() {
 	screenshot_timer->connect("timeout", callable_mp(this, &EditorNode::_request_screenshot));
 	add_child(screenshot_timer);
 	screenshot_timer->set_owner(get_owner());
+
+	String exec = OS::get_singleton()->get_executable_path();
+	EditorSettings::get_singleton()->set_project_metadata("editor_metadata", "executable_path", exec); // Save editor executable path for third-party tools
 }
 
 EditorNode::~EditorNode() {
