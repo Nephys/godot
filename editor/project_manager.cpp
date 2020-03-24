@@ -186,7 +186,8 @@ private:
 
 		if (mode == MODE_IMPORT || mode == MODE_RENAME) {
 
-			if (valid_path != "" && !d->file_exists("project.godot")) {
+			//if (valid_path != "" && !d->file_exists("project.godot")) {
+			if (valid_path != "" && !d->file_exists("project.blz")) {
 
 				if (valid_path.ends_with(".zip")) {
 					FileAccess *src_f = NULL;
@@ -208,7 +209,8 @@ private:
 						char fname[16384];
 						ret = unzGetCurrentFileInfo(pkg, &info, fname, 16384, NULL, 0, NULL, 0);
 
-						if (String(fname).ends_with("project.godot")) {
+						//if (String(fname).ends_with("project.godot")) {
+						if (String(fname).ends_with("project.blz")) {
 							break;
 						}
 
@@ -216,7 +218,8 @@ private:
 					}
 
 					if (ret == UNZ_END_OF_LIST_OF_FILE) {
-						set_message(TTR("Invalid \".zip\" project file; it doesn't contain a \"project.godot\" file."), MESSAGE_ERROR);
+						//set_message(TTR("Invalid \".zip\" project file; it doesn't contain a \"project.godot\" file."), MESSAGE_ERROR);
+						set_message(TTR("Invalid \".zip\" project file; it doesn't contain a \"project.blz\" file."), MESSAGE_ERROR);
 						memdelete(d);
 						get_ok()->set_disabled(true);
 						unzClose(pkg);
@@ -251,7 +254,8 @@ private:
 					}
 
 				} else {
-					set_message(TTR("Please choose a \"project.godot\" or \".zip\" file."), MESSAGE_ERROR);
+					//set_message(TTR("Please choose a \"project.godot\" or \".zip\" file."), MESSAGE_ERROR);
+					set_message(TTR("Please choose a \"project.blz\" or \".zip\" file."), MESSAGE_ERROR);
 					memdelete(d);
 					install_path_container->hide();
 					get_ok()->set_disabled(true);
@@ -331,7 +335,8 @@ private:
 
 		String p = p_path;
 		if (mode == MODE_IMPORT) {
-			if (p.ends_with("project.godot")) {
+			//if (p.ends_with("project.godot")) {
+			if (p.ends_with("project.blz")) {
 				p = p.get_base_dir();
 				install_path_container->hide();
 				get_ok()->set_disabled(false);
@@ -340,7 +345,8 @@ private:
 				install_path_container->show();
 				get_ok()->set_disabled(false);
 			} else {
-				set_message(TTR("Please choose a \"project.godot\" or \".zip\" file."), MESSAGE_ERROR);
+				//set_message(TTR("Please choose a \"project.godot\" or \".zip\" file."), MESSAGE_ERROR);
+				set_message(TTR("Please choose a \"project.blz\" or \".zip\" file."), MESSAGE_ERROR);
 				get_ok()->set_disabled(true);
 				return;
 			}
@@ -379,7 +385,8 @@ private:
 
 			fdialog->set_mode(FileDialog::MODE_OPEN_FILE);
 			fdialog->clear_filters();
-			fdialog->add_filter(vformat("project.godot ; %s %s", VERSION_NAME, TTR("Project")));
+			//fdialog->add_filter(vformat("project.godot ; %s %s", VERSION_NAME, TTR("Project")));
+			fdialog->add_filter(vformat("project.blz ; %s %s", VERSION_NAME, TTR("Project")));
 			fdialog->add_filter("*.zip ; " + TTR("ZIP File"));
 		} else {
 			fdialog->set_mode(FileDialog::MODE_OPEN_DIR);
@@ -455,13 +462,16 @@ private:
 
 			int err = current->setup(dir2, "");
 			if (err != OK) {
-				set_message(vformat(TTR("Couldn't load project.godot in project path (error %d). It may be missing or corrupted."), err), MESSAGE_ERROR);
+				//set_message(vformat(TTR("Couldn't load project.godot in project path (error %d). It may be missing or corrupted."), err), MESSAGE_ERROR);
+				set_message(vformat(TTR("Couldn't load project.blz in project path (error %d). It may be missing or corrupted."), err), MESSAGE_ERROR);
 			} else {
 				ProjectSettings::CustomMap edited_settings;
 				edited_settings["application/config/name"] = project_name->get_text();
 
-				if (current->save_custom(dir2.plus_file("project.godot"), edited_settings, Vector<String>(), true) != OK) {
-					set_message(TTR("Couldn't edit project.godot in project path."), MESSAGE_ERROR);
+				//if (current->save_custom(dir2.plus_file("project.godot"), edited_settings, Vector<String>(), true) != OK) {
+				if (current->save_custom(dir2.plus_file("project.blz"), edited_settings, Vector<String>(), true) != OK) {
+					//set_message(TTR("Couldn't edit project.godot in project path."), MESSAGE_ERROR);
+					set_message(TTR("Couldn't edit project.blz in project path."), MESSAGE_ERROR);
 				}
 			}
 
@@ -495,14 +505,17 @@ private:
 					initial_settings["application/config/icon"] = "res://icon.png";
 					initial_settings["rendering/environment/default_environment"] = "res://default_env.tres";
 
-					if (ProjectSettings::get_singleton()->save_custom(dir.plus_file("project.godot"), initial_settings, Vector<String>(), false) != OK) {
-						set_message(TTR("Couldn't create project.godot in project path."), MESSAGE_ERROR);
+					//if (ProjectSettings::get_singleton()->save_custom(dir.plus_file("project.godot"), initial_settings, Vector<String>(), false) != OK) {
+					if (ProjectSettings::get_singleton()->save_custom(dir.plus_file("project.blz"), initial_settings, Vector<String>(), false) != OK) {
+						//set_message(TTR("Couldn't create project.godot in project path."), MESSAGE_ERROR);
+						set_message(TTR("Couldn't create project.blz in project path."), MESSAGE_ERROR);
 					} else {
 						ResourceSaver::save(dir.plus_file("icon.png"), get_icon("DefaultProjectIcon", "EditorIcons"));
 
 						FileAccess *f = FileAccess::open(dir.plus_file("default_env.tres"), FileAccess::WRITE);
 						if (!f) {
-							set_message(TTR("Couldn't create project.godot in project path."), MESSAGE_ERROR);
+							//set_message(TTR("Couldn't create project.godot in project path."), MESSAGE_ERROR);
+							set_message(TTR("Couldn't create project.blz in project path."), MESSAGE_ERROR);
 						} else {
 							f->store_line("[gd_resource type=\"Environment\" load_steps=2 format=2]");
 							f->store_line("[sub_resource type=\"ProceduralSky\" id=1]");
@@ -714,7 +727,8 @@ public:
 
 			int err = current->setup(project_path->get_text(), "");
 			if (err != OK) {
-				set_message(vformat(TTR("Couldn't load project.godot in project path (error %d). It may be missing or corrupted."), err), MESSAGE_ERROR);
+				//set_message(vformat(TTR("Couldn't load project.godot in project path (error %d). It may be missing or corrupted."), err), MESSAGE_ERROR);
+				set_message(vformat(TTR("Couldn't load project.blz in project path (error %d). It may be missing or corrupted."), err), MESSAGE_ERROR);
 				status_rect->show();
 				msg->show();
 				get_ok()->set_disabled(true);
@@ -1175,7 +1189,8 @@ void ProjectList::load_project_icon(int p_index) {
 void ProjectList::load_project_data(const String &p_property_key, Item &p_item, bool p_favorite) {
 
 	String path = EditorSettings::get_singleton()->get(p_property_key);
-	String conf = path.plus_file("project.godot");
+	//String conf = path.plus_file("project.godot");
+	String conf = path.plus_file("project.blz");
 	bool grayed = false;
 	bool missing = false;
 
@@ -1298,7 +1313,8 @@ void ProjectList::update_dock_menu() {
 				}
 				favs_added = 0;
 			}
-			OS::get_singleton()->global_menu_add_item("_dock", _projects[i].project_name + " ( " + _projects[i].path + " )", GLOBAL_OPEN_PROJECT, Variant(_projects[i].path.plus_file("project.godot")));
+			//OS::get_singleton()->global_menu_add_item("_dock", _projects[i].project_name + " ( " + _projects[i].path + " )", GLOBAL_OPEN_PROJECT, Variant(_projects[i].path.plus_file("project.godot")));
+			OS::get_singleton()->global_menu_add_item("_dock", _projects[i].project_name + " ( " + _projects[i].path + " )", GLOBAL_OPEN_PROJECT, Variant(_projects[i].path.plus_file("project.blz")));
 			total_added++;
 		}
 	}
@@ -2049,7 +2065,9 @@ void ProjectManager::_open_selected_projects() {
 	for (const Set<String>::Element *E = selected_list.front(); E; E = E->next()) {
 		const String &selected = E->get();
 		String path = EditorSettings::get_singleton()->get("projects/" + selected);
-		String conf = path.plus_file("project.godot");
+		//String conf = path.plus_file("project.godot");
+		String conf = path.plus_file("project.blz");
+
 
 		if (!FileAccess::exists(conf)) {
 			dialog_error->set_text(vformat(TTR("Can't open project at '%s'."), path));
@@ -2101,7 +2119,8 @@ void ProjectManager::_open_selected_projects_ask() {
 	}
 
 	// Update the project settings or don't open
-	String conf = project.path.plus_file("project.godot");
+	//String conf = project.path.plus_file("project.godot");
+	String conf = project.path.plus_file("project.blz");
 	int config_version = project.version;
 
 	// Check if the config_version property was empty or 0
@@ -2193,7 +2212,8 @@ void ProjectManager::_scan_dir(const String &path, List<String> *r_projects) {
 	while (n != String()) {
 		if (da->current_is_dir() && !n.begins_with(".")) {
 			_scan_dir(da->get_current_dir().plus_file(n), r_projects);
-		} else if (n == "project.godot") {
+		//} else if (n == "project.godot") {
+		} else if (n == "project.blz") {
 			r_projects->push_back(da->get_current_dir());
 		}
 		n = da->get_next();
@@ -2343,7 +2363,8 @@ void ProjectManager::_files_dropped(PackedStringArray p_files, int p_screen) {
 				dir->list_dir_begin();
 				String file = dir->get_next();
 				while (confirm && file != String()) {
-					if (!dir->current_is_dir() && file.ends_with("project.godot")) {
+					//if (!dir->current_is_dir() && file.ends_with("project.godot")) {
+					if (!dir->current_is_dir() && file.ends_with("project.blz")) {
 						confirm = false;
 					}
 					file = dir->get_next();
