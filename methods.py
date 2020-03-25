@@ -62,6 +62,9 @@ def update_version(module_version_string=""):
 
     # NOTE: It is safe to generate this file here, since this is still executed serially
     f = open("core/version_generated.gen.h", "w")
+    f.write("/* THIS FILE IS GENERATED DO NOT EDIT */\n")
+    f.write("#ifndef VERSION_GENERATED_GEN_H\n")
+    f.write("#define VERSION_GENERATED_GEN_H\n")
     f.write("#define VERSION_SHORT_NAME \"" + str(version.short_name) + "\"\n")
     f.write("#define VERSION_NAME \"" + str(version.name) + "\"\n")
     f.write("#define VERSION_MAJOR " + str(version.major) + "\n")
@@ -71,11 +74,19 @@ def update_version(module_version_string=""):
     f.write("#define VERSION_BUILD \"" + str(build_name) + "\"\n")
     f.write("#define VERSION_MODULE_CONFIG \"" + str(version.module_config) + module_version_string + "\"\n")
     f.write("#define VERSION_YEAR " + str(version.year) + "\n")
+<<<<<<< HEAD
     #f.write("#define VERSION_WEBSITE \"" + str(version.website) + "\"\n")
+=======
+    f.write("#define VERSION_WEBSITE \"" + str(version.website) + "\"\n")
+    f.write("#endif // VERSION_GENERATED_GEN_H\n")
+>>>>>>> upstream/master
     f.close()
 
     # NOTE: It is safe to generate this file here, since this is still executed serially
     fhash = open("core/version_hash.gen.h", "w")
+    fhash.write("/* THIS FILE IS GENERATED DO NOT EDIT */\n")
+    fhash.write("#ifndef VERSION_HASH_GEN_H\n")
+    fhash.write("#define VERSION_HASH_GEN_H\n")
     githash = ""
     gitfolder = ".git"
 
@@ -93,7 +104,8 @@ def update_version(module_version_string=""):
         else:
             githash = head
 
-    fhash.write("#define VERSION_HASH \"" + githash + "\"")
+    fhash.write("#define VERSION_HASH \"" + githash + "\"\n")
+    fhash.write("#endif // VERSION_HASH_GEN_H\n")
     fhash.close()
 
 
