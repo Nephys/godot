@@ -280,8 +280,8 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
 	// Please, use alphabet order if you've added new theme here(After "Default" and "Custom")
 
 	if (preset == "Default") {
-		preset_accent_color = Color(0.41, 0.61, 0.91);
-		preset_base_color = Color(0.2, 0.23, 0.31);
+		preset_accent_color = Color(0.15, 0.55, 0.8);
+		preset_base_color = Color(0.1, 0.1, 0.1);
 		preset_contrast = default_contrast;
 	} else if (preset == "Custom") {
 		accent_color = EDITOR_GET("interface/theme/accent_color");
@@ -295,10 +295,6 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
 		preset_accent_color = Color(0.32, 0.58, 0.89);
 		preset_base_color = Color(0.22, 0.24, 0.29);
 		preset_contrast = 0.25;
-	} else if (preset == "Godot 2") {
-		preset_accent_color = Color(0.53, 0.67, 0.89);
-		preset_base_color = Color(0.24, 0.23, 0.27);
-		preset_contrast = 0.25;
 	} else if (preset == "Grey") {
 		preset_accent_color = Color(0.72, 0.89, 1.0);
 		preset_base_color = Color(0.24, 0.24, 0.24);
@@ -307,6 +303,10 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
 		preset_accent_color = Color(0.13, 0.44, 1.0);
 		preset_base_color = Color(1, 1, 1);
 		preset_contrast = 0.08;
+	} else if (preset == "Retro") {
+		preset_accent_color = Color(0.53, 0.67, 0.89);
+		preset_base_color = Color(0.24, 0.23, 0.27);
+		preset_contrast = 0.25;
 	} else if (preset == "Solarized (Dark)") {
 		preset_accent_color = Color(0.15, 0.55, 0.82);
 		preset_base_color = Color(0.03, 0.21, 0.26);
@@ -316,8 +316,8 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
 		preset_base_color = Color(0.99, 0.96, 0.89);
 		preset_contrast = 0.06;
 	} else { // Default
-		preset_accent_color = Color(0.41, 0.61, 0.91);
-		preset_base_color = Color(0.2, 0.23, 0.31);
+		preset_accent_color = Color(0.15, 0.55, 0.8);
+		preset_base_color = Color(0.1, 0.1, 0.1);
 		preset_contrast = default_contrast;
 	}
 

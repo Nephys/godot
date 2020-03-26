@@ -347,12 +347,14 @@ void EditorSettings::_load_defaults(Ref<ConfigFile> p_extra_config) {
 
 	// Theme
 	_initial_set("interface/theme/preset", "Default");
-	hints["interface/theme/preset"] = PropertyInfo(Variant::STRING, "interface/theme/preset", PROPERTY_HINT_ENUM, "Default,Alien,Arc,Godot 2,Grey,Light,Solarized (Dark),Solarized (Light),Custom", PROPERTY_USAGE_DEFAULT);
+	hints["interface/theme/preset"] = PropertyInfo(Variant::STRING, "interface/theme/preset", PROPERTY_HINT_ENUM, "Default,Alien,Arc,Grey,Light,Retro,Solarized (Dark),Solarized (Light),Custom", PROPERTY_USAGE_DEFAULT);
 	_initial_set("interface/theme/icon_and_font_color", 0);
 	hints["interface/theme/icon_and_font_color"] = PropertyInfo(Variant::INT, "interface/theme/icon_and_font_color", PROPERTY_HINT_ENUM, "Auto,Dark,Light", PROPERTY_USAGE_DEFAULT);
-	_initial_set("interface/theme/base_color", Color(0.2, 0.23, 0.31));
+	//_initial_set("interface/theme/base_color", Color(0.2, 0.23, 0.31));
+	_initial_set("interface/theme/base_color", Color(0.1, 0.1, 0.1));
 	hints["interface/theme/base_color"] = PropertyInfo(Variant::COLOR, "interface/theme/base_color", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT);
-	_initial_set("interface/theme/accent_color", Color(0.41, 0.61, 0.91));
+	//_initial_set("interface/theme/accent_color", Color(0.41, 0.61, 0.91));
+	_initial_set("interface/theme/accent_color", Color(0.15, 0.55, 0.8));
 	hints["interface/theme/accent_color"] = PropertyInfo(Variant::COLOR, "interface/theme/accent_color", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT);
 	_initial_set("interface/theme/contrast", 0.25);
 	hints["interface/theme/contrast"] = PropertyInfo(Variant::FLOAT, "interface/theme/contrast", PROPERTY_HINT_RANGE, "0.01, 1, 0.01");

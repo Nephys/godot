@@ -74,12 +74,8 @@ def update_version(module_version_string=""):
     f.write("#define VERSION_BUILD \"" + str(build_name) + "\"\n")
     f.write("#define VERSION_MODULE_CONFIG \"" + str(version.module_config) + module_version_string + "\"\n")
     f.write("#define VERSION_YEAR " + str(version.year) + "\n")
-<<<<<<< HEAD
     #f.write("#define VERSION_WEBSITE \"" + str(version.website) + "\"\n")
-=======
-    f.write("#define VERSION_WEBSITE \"" + str(version.website) + "\"\n")
     f.write("#endif // VERSION_GENERATED_GEN_H\n")
->>>>>>> upstream/master
     f.close()
 
     # NOTE: It is safe to generate this file here, since this is still executed serially
