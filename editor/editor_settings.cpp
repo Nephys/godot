@@ -382,7 +382,7 @@ void EditorSettings::_load_defaults(Ref<ConfigFile> p_extra_config) {
 	// Directories
 	_initial_set("filesystem/directories/autoscan_project_path", "");
 	hints["filesystem/directories/autoscan_project_path"] = PropertyInfo(Variant::STRING, "filesystem/directories/autoscan_project_path", PROPERTY_HINT_GLOBAL_DIR);
-	_initial_set("filesystem/directories/default_project_path", OS::get_singleton()->has_environment("HOME") ? OS::get_singleton()->get_environment("HOME") : OS::get_singleton()->get_system_dir(OS::SYSTEM_DIR_DOCUMENTS));
+	_initial_set("filesystem/directories/default_project_path", OS::get_singleton()->has_environment("HOME") ? OS::get_singleton()->get_environment("HOME").plus_file(OS::get_singleton()->get_godot_dir_name().plus_file("projects")) : OS::get_singleton()->get_system_dir(OS::SYSTEM_DIR_DOCUMENTS).plus_file(OS::get_singleton()->get_godot_dir_name().plus_file("projects")));
 	hints["filesystem/directories/default_project_path"] = PropertyInfo(Variant::STRING, "filesystem/directories/default_project_path", PROPERTY_HINT_GLOBAL_DIR);
 
 	// On save
@@ -789,6 +789,8 @@ void EditorSettings::create() {
 	String cache_path;
 	String cache_dir;
 
+	String projects_dir = OS::get_singleton()->has_environment("HOME") ? OS::get_singleton()->get_environment("HOME").plus_file(OS::get_singleton()->get_godot_dir_name().plus_file("projects")) : OS::get_singleton()->get_system_dir(OS::SYSTEM_DIR_DOCUMENTS).plus_file(OS::get_singleton()->get_godot_dir_name().plus_file("projects"));
+
 	Ref<ConfigFile> extra_config = memnew(ConfigFile);
 
 	String exe_path = OS::get_singleton()->get_executable_path().get_base_dir();
@@ -845,6 +847,15 @@ void EditorSettings::create() {
 		// Validate/create data dir and subdirectories
 
 		dir = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
+		if (dir->change_dir(projects_dir) != OK) {
+			dir->make_dir_recursive(projects_dir);
+			if (dir->change_dir(projects_dir) != OK) {
+				ERR_PRINT("Cannot create projects directory!");
+				memdelete(dir);
+				goto fail;
+			}
+		}
+
 		if (dir->change_dir(data_dir) != OK) {
 			dir->make_dir_recursive(data_dir);
 			if (dir->change_dir(data_dir) != OK) {

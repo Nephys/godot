@@ -706,7 +706,8 @@ Camera::Camera() {
 	viewport = NULL;
 	force_change = false;
 	mode = PROJECTION_PERSPECTIVE;
-	set_perspective(70.0, 0.05, 100.0);
+	//set_perspective(70.0, 0.05, 100.0);
+	set_perspective(90.0, 0.02, 1500.0);
 	keep_aspect = KEEP_HEIGHT;
 	layers = 0xfffff;
 	v_offset = 0;
