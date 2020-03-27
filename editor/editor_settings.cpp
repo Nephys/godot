@@ -524,9 +524,12 @@ void EditorSettings::_load_defaults(Ref<ConfigFile> p_extra_config) {
 	_initial_set("editors/3d/primary_grid_steps", 10);
 	hints["editors/3d/primary_grid_steps"] = PropertyInfo(Variant::INT, "editors/3d/primary_grid_steps", PROPERTY_HINT_RANGE, "1,100,1", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_RESTART_IF_CHANGED);
 
-	_initial_set("editors/3d/default_fov", 70.0);
+	/*_initial_set("editors/3d/default_fov", 70.0);
 	_initial_set("editors/3d/default_z_near", 0.05);
-	_initial_set("editors/3d/default_z_far", 500.0);
+	_initial_set("editors/3d/default_z_far", 500.0);*/
+	_initial_set("editors/3d/default_fov", 90.0);
+	_initial_set("editors/3d/default_z_near", 0.02);
+	_initial_set("editors/3d/default_z_far", 1500.0);
 
 	// 3D: Navigation
 	_initial_set("editors/3d/navigation/navigation_scheme", 0);
