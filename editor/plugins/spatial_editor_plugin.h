@@ -232,7 +232,7 @@ public:
 	};
 
 	enum NavigationScheme {
-		NAVIGATION_GODOT,
+		NAVIGATION_BLITZ,
 		NAVIGATION_MAYA,
 		NAVIGATION_MODO,
 	};
