@@ -954,11 +954,13 @@ RigidBody2D::RigidBody2D() :
 
 	angular_velocity = 0;
 	sleeping = false;
-	ccd_mode = CCD_MODE_DISABLED;
+	//ccd_mode = CCD_MODE_DISABLED;
+	ccd_mode = CCD_MODE_CAST_SHAPE;
 
 	custom_integrator = false;
 	contact_monitor = NULL;
-	can_sleep = true;
+	//can_sleep = true;
+	can_sleep = false;
 
 	Physics2DServer::get_singleton()->body_set_force_integration_callback(get_rid(), this, "_direct_state_changed");
 }

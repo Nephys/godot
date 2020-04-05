@@ -918,11 +918,13 @@ RigidBody::RigidBody() :
 
 	//angular_velocity=0;
 	sleeping = false;
-	ccd = false;
+	//ccd = false;
+	ccd = true;
 
 	custom_integrator = false;
 	contact_monitor = NULL;
-	can_sleep = true;
+	//can_sleep = true;
+	can_sleep = false;
 
 	PhysicsServer::get_singleton()->body_set_force_integration_callback(get_rid(), this, "_direct_state_changed");
 }
