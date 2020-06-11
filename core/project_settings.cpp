@@ -737,6 +737,9 @@ Error ProjectSettings::_save_settings_binary(const String &p_file, const Map<Str
 			ERR_FAIL_COND_V_MSG(err != OK, ERR_INVALID_DATA, "Error when trying to encode Variant.");
 			file->store_32(len);
 			file->store_buffer(buff.ptr(), buff.size());
+
+			
+			
 		}
 	}
 
