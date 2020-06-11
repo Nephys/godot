@@ -49,7 +49,6 @@
 #include "scene/resources/text_file.h"
 
 class ScriptEditorQuickOpen : public ConfirmationDialog {
-
 	GDCLASS(ScriptEditorQuickOpen, ConfirmationDialog);
 
 	LineEdit *search_box;
@@ -76,7 +75,6 @@ public:
 class EditorDebuggerNode;
 
 class ScriptEditorBase : public VBoxContainer {
-
 	GDCLASS(ScriptEditorBase, VBoxContainer);
 
 protected:
@@ -92,7 +90,7 @@ public:
 	virtual void set_edited_resource(const RES &p_res) = 0;
 	virtual void reload_text() = 0;
 	virtual String get_name() = 0;
-	virtual Ref<Texture2D> get_icon() = 0;
+	virtual Ref<Texture2D> get_theme_icon() = 0;
 	virtual bool is_unsaved() = 0;
 	virtual Variant get_edit_state() = 0;
 	virtual void set_edit_state(const Variant &p_state) = 0;
@@ -131,7 +129,6 @@ class FindInFilesDialog;
 class FindInFilesPanel;
 
 class ScriptEditor : public PanelContainer {
-
 	GDCLASS(ScriptEditor, PanelContainer);
 
 	EditorNode *editor;
@@ -159,7 +156,6 @@ class ScriptEditor : public PanelContainer {
 		REPLACE_IN_FILES,
 		SEARCH_HELP,
 		SEARCH_WEBSITE,
-		REQUEST_DOCS,
 		HELP_SEARCH_FIND,
 		HELP_SEARCH_FIND_NEXT,
 		HELP_SEARCH_FIND_PREVIOUS,
@@ -204,7 +200,6 @@ class ScriptEditor : public PanelContainer {
 
 	Button *help_search;
 	Button *site_search;
-	Button *request_docs;
 	EditorHelpSearch *help_search_dialog;
 
 	ItemList *script_list;
@@ -252,7 +247,6 @@ class ScriptEditor : public PanelContainer {
 	static CreateSyntaxHighlighterFunc syntax_highlighters_funcs[SYNTAX_HIGHLIGHTER_FUNC_MAX];
 
 	struct ScriptHistory {
-
 		Control *control;
 		Variant state;
 	};
@@ -456,7 +450,6 @@ public:
 };
 
 class ScriptEditorPlugin : public EditorPlugin {
-
 	GDCLASS(ScriptEditorPlugin, EditorPlugin);
 
 	ScriptEditor *script_editor;

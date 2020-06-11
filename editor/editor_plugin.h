@@ -42,14 +42,14 @@
 #include "scene/resources/texture.h"
 
 class EditorNode;
-class Spatial;
-class Camera;
+class Node3D;
+class Camera3D;
 class EditorSelection;
 class EditorExport;
 class EditorSettings;
 class EditorImportPlugin;
 class EditorExportPlugin;
-class EditorSpatialGizmoPlugin;
+class EditorNode3DGizmoPlugin;
 class EditorResourcePreview;
 class EditorFileSystem;
 class EditorToolAddons;
@@ -105,20 +105,20 @@ public:
 
 	void set_main_screen_editor(const String &p_name);
 	void set_distraction_free_mode(bool p_enter);
+	bool is_distraction_free_mode_enabled() const;
 
 	EditorInterface();
 };
 
 class EditorPlugin : public Node {
-
 	GDCLASS(EditorPlugin, Node);
 	friend class EditorData;
-	UndoRedo *undo_redo;
+	UndoRedo *undo_redo = nullptr;
 
 	UndoRedo *_get_undo_redo() { return undo_redo; }
 
-	bool input_event_forwarding_always_enabled;
-	bool force_draw_over_forwarding_enabled;
+	bool input_event_forwarding_always_enabled = false;
+	bool force_draw_over_forwarding_enabled = false;
 
 	String last_main_screen_name;
 
@@ -185,7 +185,7 @@ public:
 	virtual void forward_canvas_draw_over_viewport(Control *p_overlay);
 	virtual void forward_canvas_force_draw_over_viewport(Control *p_overlay);
 
-	virtual bool forward_spatial_gui_input(Camera *p_camera, const Ref<InputEvent> &p_event);
+	virtual bool forward_spatial_gui_input(Camera3D *p_camera, const Ref<InputEvent> &p_event);
 	virtual void forward_spatial_draw_over_viewport(Control *p_overlay);
 	virtual void forward_spatial_force_draw_over_viewport(Control *p_overlay);
 
@@ -227,8 +227,8 @@ public:
 	void add_export_plugin(const Ref<EditorExportPlugin> &p_exporter);
 	void remove_export_plugin(const Ref<EditorExportPlugin> &p_exporter);
 
-	void add_spatial_gizmo_plugin(const Ref<EditorSpatialGizmoPlugin> &p_gizmo_plugin);
-	void remove_spatial_gizmo_plugin(const Ref<EditorSpatialGizmoPlugin> &p_gizmo_plugin);
+	void add_spatial_gizmo_plugin(const Ref<EditorNode3DGizmoPlugin> &p_gizmo_plugin);
+	void remove_spatial_gizmo_plugin(const Ref<EditorNode3DGizmoPlugin> &p_gizmo_plugin);
 
 	void add_inspector_plugin(const Ref<EditorInspectorPlugin> &p_plugin);
 	void remove_inspector_plugin(const Ref<EditorInspectorPlugin> &p_plugin);
@@ -242,8 +242,8 @@ public:
 	void enable_plugin();
 	void disable_plugin();
 
-	EditorPlugin();
-	virtual ~EditorPlugin();
+	EditorPlugin() {}
+	virtual ~EditorPlugin() {}
 };
 
 VARIANT_ENUM_CAST(EditorPlugin::CustomControlContainer);
@@ -252,7 +252,6 @@ VARIANT_ENUM_CAST(EditorPlugin::DockSlot);
 typedef EditorPlugin *(*EditorPluginCreateFunc)(EditorNode *);
 
 class EditorPlugins {
-
 	enum {
 		MAX_CREATE_FUNCS = 64
 	};
@@ -268,7 +267,7 @@ class EditorPlugins {
 public:
 	static int get_plugin_count() { return creation_func_count; }
 	static EditorPlugin *create(int p_idx, EditorNode *p_editor) {
-		ERR_FAIL_INDEX_V(p_idx, creation_func_count, NULL);
+		ERR_FAIL_INDEX_V(p_idx, creation_func_count, nullptr);
 		return creation_funcs[p_idx](p_editor);
 	}
 
@@ -278,7 +277,6 @@ public:
 	}
 
 	static void add_create_func(EditorPluginCreateFunc p_func) {
-
 		ERR_FAIL_COND(creation_func_count >= MAX_CREATE_FUNCS);
 		creation_funcs[creation_func_count++] = p_func;
 	}

@@ -5,7 +5,7 @@
 	</brief_description>
 	<description>
 		The [PhysicalSkyMaterial] uses the Preetham analytic daylight model to draw a sky based on physical properties. This results in a substantially more realistic sky than the [ProceduralSkyMaterial], but it is slightly slower and less flexible.
-		The [PhysicalSkyMaterial] only supports one sun. The color, energy, and direction of the sun are taken from the first [DirectionalLight] in the scene tree.
+		The [PhysicalSkyMaterial] only supports one sun. The color, energy, and direction of the sun are taken from the first [DirectionalLight3D] in the scene tree.
 		As it is based on a daylight model, the sky fades to black as the sunset ends. If you want a full day/night cycle, you will have to add a night sky by converting this to a [ShaderMaterial] and adding a night sky directly into the resulting shader.
 	</description>
 	<tutorials>
@@ -30,6 +30,9 @@
 		</member>
 		<member name="mie_eccentricity" type="float" setter="set_mie_eccentricity" getter="get_mie_eccentricity" default="0.8">
 			Controls the direction of the mie scattering. A value of [code]1[/code] means that when light hits a particle it passing through straight forward. A value of [code]-1[/code] means that all light is scatter backwards.
+		</member>
+		<member name="night_sky" type="Texture2D" setter="set_night_sky" getter="get_night_sky">
+			[Texture2D] for the night sky. This is added to the sky, so if it is bright enough, it may be visible during the day.
 		</member>
 		<member name="rayleigh_coefficient" type="float" setter="set_rayleigh_coefficient" getter="get_rayleigh_coefficient" default="2.0">
 			Controls the strength of the rayleigh scattering. Rayleigh scattering results from light colliding with small particles. It is responsible for the blue color of the sky.

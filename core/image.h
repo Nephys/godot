@@ -33,7 +33,6 @@
 
 #include "core/color.h"
 #include "core/math/rect2.h"
-
 #include "core/resource.h"
 
 /**
@@ -172,10 +171,11 @@ private:
 		create(p_width, p_height, p_use_mipmaps, p_format, p_data);
 	}
 
-	Format format;
+	Format format = FORMAT_L8;
 	Vector<uint8_t> data;
-	int width, height;
-	bool mipmaps;
+	int width = 0;
+	int height = 0;
+	bool mipmaps = false;
 
 	void _copy_internals_from(const Image &p_image) {
 		format = p_image.format;
@@ -187,7 +187,7 @@ private:
 
 	_FORCE_INLINE_ void _get_mipmap_offset_and_size(int p_mipmap, int &r_offset, int &r_width, int &r_height) const; //get where the mipmap begins in data
 
-	static int _get_dst_image_size(int p_width, int p_height, Format p_format, int &r_mipmaps, int p_mipmaps = -1, int *r_mm_width = NULL, int *r_mm_height = NULL);
+	static int _get_dst_image_size(int p_width, int p_height, Format p_format, int &r_mipmaps, int p_mipmaps = -1, int *r_mm_width = nullptr, int *r_mm_height = nullptr);
 	bool _can_modify(Format p_format) const;
 
 	_FORCE_INLINE_ void _put_pixelb(int p_x, int p_y, uint32_t p_pixelsize, uint8_t *p_data, const uint8_t *p_pixel);
@@ -235,7 +235,6 @@ public:
 	void resize_to_po2(bool p_square = false);
 	void resize(int p_width, int p_height, Interpolation p_interpolation = INTERPOLATE_BILINEAR);
 	void shrink_x2();
-	void expand_x2_hq2x();
 	bool is_size_po2() const;
 	/**
 	 * Crop the image to a specific size, if larger, then the image is filled by black
@@ -286,7 +285,7 @@ public:
 	/**
 	 * create an empty image
 	 */
-	Image();
+	Image() {}
 	/**
 	 * create an empty image of a specific size and format
 	 */
@@ -295,6 +294,8 @@ public:
 	 * import an image of a specific size and format from a pointer
 	 */
 	Image(int p_width, int p_height, bool p_mipmaps, Format p_format, const Vector<uint8_t> &p_data);
+
+	~Image() {}
 
 	enum AlphaMode {
 		ALPHA_NONE,
@@ -376,6 +377,8 @@ public:
 	void set_pixelv(const Point2 &p_dst, const Color &p_color);
 	void set_pixel(int p_x, int p_y, const Color &p_color);
 
+	void set_as_black();
+
 	void copy_internals_from(const Ref<Image> &p_image) {
 		ERR_FAIL_COND_MSG(p_image.is_null(), "It's not a reference to a valid Image object.");
 		format = p_image->format;
@@ -384,8 +387,6 @@ public:
 		mipmaps = p_image->mipmaps;
 		data = p_image->data;
 	}
-
-	~Image();
 };
 
 VARIANT_ENUM_CAST(Image::Format)

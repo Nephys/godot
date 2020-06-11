@@ -36,7 +36,6 @@
 #include "scene/gui/dialogs.h"
 #include "scene/gui/tree.h"
 class EditorQuickOpen : public ConfirmationDialog {
-
 	GDCLASS(EditorQuickOpen, ConfirmationDialog);
 
 	LineEdit *search_box;
@@ -55,6 +54,8 @@ class EditorQuickOpen : public ConfirmationDialog {
 
 	void _confirmed();
 	void _text_changed(const String &p_newtext);
+
+	void _theme_changed();
 
 protected:
 	void _notification(int p_what);

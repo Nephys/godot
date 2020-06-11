@@ -39,17 +39,16 @@ void Sky::set_radiance_size(RadianceSize p_size) {
 	static const int size[RADIANCE_SIZE_MAX] = {
 		32, 64, 128, 256, 512, 1024, 2048
 	};
-	VS::get_singleton()->sky_set_radiance_size(sky, size[radiance_size]);
+	RS::get_singleton()->sky_set_radiance_size(sky, size[radiance_size]);
 }
 
 Sky::RadianceSize Sky::get_radiance_size() const {
-
 	return radiance_size;
 }
 
 void Sky::set_process_mode(ProcessMode p_mode) {
 	mode = p_mode;
-	VS::get_singleton()->sky_set_mode(sky, VS::SkyMode(mode));
+	RS::get_singleton()->sky_set_mode(sky, RS::SkyMode(mode));
 }
 
 Sky::ProcessMode Sky::get_process_mode() const {
@@ -59,9 +58,10 @@ Sky::ProcessMode Sky::get_process_mode() const {
 void Sky::set_material(const Ref<Material> &p_material) {
 	sky_material = p_material;
 	RID material_rid;
-	if (sky_material.is_valid())
+	if (sky_material.is_valid()) {
 		material_rid = sky_material->get_rid();
-	VS::get_singleton()->sky_set_material(sky, material_rid);
+	}
+	RS::get_singleton()->sky_set_material(sky, material_rid);
 }
 
 Ref<Material> Sky::get_material() const {
@@ -69,12 +69,10 @@ Ref<Material> Sky::get_material() const {
 }
 
 RID Sky::get_rid() const {
-
 	return sky;
 }
 
 void Sky::_bind_methods() {
-
 	ClassDB::bind_method(D_METHOD("set_radiance_size", "size"), &Sky::set_radiance_size);
 	ClassDB::bind_method(D_METHOD("get_radiance_size"), &Sky::get_radiance_size);
 
@@ -104,10 +102,9 @@ void Sky::_bind_methods() {
 Sky::Sky() {
 	mode = PROCESS_MODE_QUALITY;
 	radiance_size = RADIANCE_SIZE_256;
-	sky = VS::get_singleton()->sky_create();
+	sky = RS::get_singleton()->sky_create();
 }
 
 Sky::~Sky() {
-
-	VS::get_singleton()->free(sky);
+	RS::get_singleton()->free(sky);
 }

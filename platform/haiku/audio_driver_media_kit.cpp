@@ -34,16 +34,16 @@
 
 #include "core/project_settings.h"
 
-int32_t *AudioDriverMediaKit::samples_in = NULL;
+int32_t *AudioDriverMediaKit::samples_in = nullptr;
 
 Error AudioDriverMediaKit::init() {
 	active = false;
 
-	mix_rate = GLOBAL_DEF_RST("audio/mix_rate", DEFAULT_MIX_RATE);
+	mix_rate = GLOBAL_GET("audio/mix_rate");
 	speaker_mode = SPEAKER_MODE_STEREO;
 	channels = 2;
 
-	int latency = GLOBAL_DEF_RST("audio/output_latency", DEFAULT_OUTPUT_LATENCY);
+	int latency = GLOBAL_GET("audio/output_latency");
 	buffer_size = next_power_of_2(latency * mix_rate / 1000);
 	samples_in = memnew_arr(int32_t, buffer_size * channels);
 
@@ -59,12 +59,12 @@ Error AudioDriverMediaKit::init() {
 			&format,
 			"godot_sound_server",
 			AudioDriverMediaKit::PlayBuffer,
-			NULL,
+			nullptr,
 			this);
 
 	if (player->InitCheck() != B_OK) {
 		fprintf(stderr, "MediaKit ERR: can not create a BSoundPlayer instance\n");
-		ERR_FAIL_COND_V(player == NULL, ERR_CANT_OPEN);
+		ERR_FAIL_COND_V(player == nullptr, ERR_CANT_OPEN);
 	}
 
 	player->Start();
@@ -126,7 +126,7 @@ void AudioDriverMediaKit::finish() {
 }
 
 AudioDriverMediaKit::AudioDriverMediaKit() {
-	player = NULL;
+	player = nullptr;
 }
 
 AudioDriverMediaKit::~AudioDriverMediaKit() {

@@ -32,6 +32,7 @@
 #define EDITOR_NODE_H
 
 #include "editor/editor_data.h"
+#include "editor/editor_export.h"
 #include "editor/editor_folding.h"
 #include "editor/editor_run.h"
 #include "editor/inspector_dock.h"
@@ -84,9 +85,10 @@ class Tabs;
 class TextureProgress;
 class ToolButton;
 class VSplitContainer;
+class Window;
+class SubViewport;
 
 class EditorNode : public Node {
-
 	GDCLASS(EditorNode, Node);
 
 public:
@@ -150,7 +152,7 @@ private:
 		FILE_EXTERNAL_OPEN_SCENE,
 		EDIT_UNDO,
 		EDIT_REDO,
-		EDIT_REVERT,
+		EDIT_RELOAD_SAVED_SCENE,
 		TOOLS_ORPHAN_RESOURCES,
 		TOOLS_CUSTOM,
 		RESOURCE_SAVE,
@@ -159,7 +161,6 @@ private:
 
 		RUN_STOP,
 		RUN_PLAY_SCENE,
-		RUN_PLAY_NATIVE,
 		RUN_PLAY_CUSTOM_SCENE,
 		RUN_SCENE_SETTINGS,
 		RUN_SETTINGS,
@@ -192,7 +193,8 @@ private:
 		HELP_SEARCH,
 		HELP_DOCS,
 		HELP_QA,
-		HELP_ISSUES,
+		HELP_REPORT_A_BUG,
+		HELP_SEND_DOCS_FEEDBACK,
 		HELP_COMMUNITY,
 		HELP_ABOUT,
 
@@ -206,7 +208,7 @@ private:
 		TOOL_MENU_BASE = 1000
 	};
 
-	Viewport *scene_root; //root of the scene being edited
+	SubViewport *scene_root; //root of the scene being edited
 
 	PanelContainer *scene_root_parent;
 	Control *theme_base;
@@ -348,11 +350,14 @@ private:
 	Button *new_inherited_button;
 	String open_import_request;
 
+	Vector<Control *> floating_docks;
+
 	TabContainer *dock_slot[DOCK_SLOT_MAX];
 	Rect2 dock_select_rect[DOCK_SLOT_MAX];
 	int dock_select_rect_over;
 	PopupPanel *dock_select_popup;
 	Control *dock_select;
+	Button *dock_float;
 	ToolButton *dock_tab_move_left;
 	ToolButton *dock_tab_move_right;
 	int dock_popup_selected;
@@ -486,6 +491,7 @@ private:
 	void _quick_run();
 
 	void _run(bool p_current = false, const String &p_custom = "");
+	void _run_native(const Ref<EditorExportPreset> &p_preset);
 
 	void _save_optimized();
 	void _import_action(const String &p_action);
@@ -493,7 +499,8 @@ private:
 	void _add_to_recent_scenes(const String &p_scene);
 	void _update_recent_scenes();
 	void _open_recent_scene(int p_idx);
-	void _global_menu_action(const Variant &p_id, const Variant &p_meta);
+	void _global_menu_scene(const Variant &p_tag);
+	void _global_menu_new_window(const Variant &p_tag);
 	void _dropped_files(const Vector<String> &p_files, int p_screen);
 	void _add_dropped_files_recursive(const Vector<String> &p_files, String to_path);
 	String _recent_scene;
@@ -540,8 +547,9 @@ private:
 
 	static void _dependency_error_report(void *ud, const String &p_path, const String &p_dep, const String &p_type) {
 		EditorNode *en = (EditorNode *)ud;
-		if (!en->dependency_errors.has(p_path))
+		if (!en->dependency_errors.has(p_path)) {
 			en->dependency_errors[p_path] = Set<String>();
+		}
 		en->dependency_errors[p_path].insert(p_dep + "::" + p_type);
 	}
 
@@ -560,6 +568,8 @@ private:
 
 	bool _find_scene_in_use(Node *p_node, const String &p_path) const;
 
+	void _update_dock_containers();
+
 	void _dock_select_input(const Ref<InputEvent> &p_input);
 	void _dock_move_left();
 	void _dock_move_right();
@@ -567,6 +577,8 @@ private:
 	void _dock_pre_popup(int p_which);
 	void _dock_split_dragged(int ofs);
 	void _dock_popup_exit();
+	void _dock_floating_close_request(Control *p_control);
+	void _dock_make_float();
 	void _scene_tab_changed(int p_tab);
 	void _scene_tab_closed(int p_tab, int option = SCENE_TAB_CLOSE);
 	void _scene_tab_hover(int p_tab);
@@ -681,7 +693,7 @@ public:
 	bool get_docks_visible() const;
 
 	void set_distraction_free_mode(bool p_enter);
-	bool get_distraction_free_mode() const;
+	bool is_distraction_free_mode_enabled() const;
 
 	void add_control_to_dock(DockSlot p_slot, Control *p_control);
 	void remove_control_from_dock(Control *p_control);
@@ -724,7 +736,7 @@ public:
 
 	Node *get_edited_scene() { return editor_data.get_edited_scene_root(); }
 
-	Viewport *get_scene_root() { return scene_root; } //root of the scene being edited
+	SubViewport *get_scene_root() { return scene_root; } //root of the scene being edited
 
 	void fix_dependencies(const String &p_for_file);
 	void clear_scene() { _cleanup_scene(); }
@@ -790,10 +802,11 @@ public:
 	static void progress_end_task_bg(const String &p_task);
 
 	void save_scene_to_path(String p_file, bool p_with_preview = true) {
-		if (p_with_preview)
+		if (p_with_preview) {
 			_save_scene_with_preview(p_file);
-		else
+		} else {
 			_save_scene(p_file);
+		}
 	}
 
 	bool is_scene_in_use(const String &p_path);
@@ -856,7 +869,6 @@ public:
 };
 
 struct EditorProgress {
-
 	String task;
 	bool step(const String &p_state, int p_step = -1, bool p_force_refresh = true) { return EditorNode::progress_task_step(task, p_state, p_step, p_force_refresh); }
 	EditorProgress(const String &p_task, const String &p_label, int p_amount, bool p_can_cancel = false) {
@@ -884,7 +896,7 @@ public:
 	bool forward_gui_input(const Ref<InputEvent> &p_event);
 	void forward_canvas_draw_over_viewport(Control *p_overlay);
 	void forward_canvas_force_draw_over_viewport(Control *p_overlay);
-	bool forward_spatial_gui_input(Camera *p_camera, const Ref<InputEvent> &p_event, bool serve_when_force_input_enabled);
+	bool forward_spatial_gui_input(Camera3D *p_camera, const Ref<InputEvent> &p_event, bool serve_when_force_input_enabled);
 	void forward_spatial_draw_over_viewport(Control *p_overlay);
 	void forward_spatial_force_draw_over_viewport(Control *p_overlay);
 	void add_plugin(EditorPlugin *p_plugin);
@@ -897,7 +909,6 @@ public:
 };
 
 struct EditorProgressBG {
-
 	String task;
 	void step(int p_step = -1) { EditorNode::progress_task_step_bg(task, p_step); }
 	EditorProgressBG(const String &p_task, const String &p_label, int p_amount) {

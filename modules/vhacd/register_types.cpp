@@ -33,7 +33,6 @@
 #include "thirdparty/vhacd/public/VHACD.h"
 
 static Vector<Vector<Face3>> convex_decompose(const Vector<Face3> &p_faces) {
-
 	Vector<float> vertices;
 	vertices.resize(p_faces.size() * 9);
 	Vector<uint32_t> indices;
@@ -84,5 +83,5 @@ void register_vhacd_types() {
 }
 
 void unregister_vhacd_types() {
-	Mesh::convex_composition_function = NULL;
+	Mesh::convex_composition_function = nullptr;
 }

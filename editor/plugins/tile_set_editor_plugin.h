@@ -32,7 +32,7 @@
 #define TILE_SET_EDITOR_PLUGIN_H
 
 #include "editor/editor_node.h"
-#include "scene/2d/sprite.h"
+#include "scene/2d/sprite_2d.h"
 #include "scene/resources/concave_polygon_shape_2d.h"
 #include "scene/resources/convex_polygon_shape_2d.h"
 #include "scene/resources/tile_set.h"
@@ -41,7 +41,6 @@
 class TilesetEditorContext;
 
 class TileSetEditor : public HSplitContainer {
-
 	friend class TileSetEditorPlugin;
 	friend class TilesetEditorContext;
 
@@ -136,7 +135,7 @@ class TileSetEditor : public HSplitContainer {
 	Ref<NavigationPolygon> edited_navigation_shape;
 
 	int current_item_index;
-	Sprite *preview;
+	Sprite2D *preview;
 	ScrollContainer *scroll;
 	Label *empty_message;
 	Control *workspace_container;
@@ -201,6 +200,7 @@ private:
 	void _on_workspace_overlay_draw();
 	void _on_workspace_draw();
 	void _on_workspace_process();
+	void _on_scroll_container_input(const Ref<InputEvent> &p_event);
 	void _on_workspace_input(const Ref<InputEvent> &p_ie);
 	void _on_tool_clicked(int p_tool);
 	void _on_priority_changed(float val);
@@ -252,7 +252,6 @@ private:
 };
 
 class TilesetEditorContext : public Object {
-
 	friend class TileSetEditor;
 	GDCLASS(TilesetEditorContext, Object);
 
@@ -278,7 +277,6 @@ public:
 };
 
 class TileSetEditorPlugin : public EditorPlugin {
-
 	GDCLASS(TileSetEditorPlugin, EditorPlugin);
 
 	TileSetEditor *tileset_editor;

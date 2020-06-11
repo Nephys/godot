@@ -34,7 +34,6 @@
 #include "script_editor_plugin.h"
 
 class TextEditor : public ScriptEditorBase {
-
 	GDCLASS(TextEditor, ScriptEditorBase);
 
 private:
@@ -121,7 +120,7 @@ public:
 	virtual void set_syntax_highlighter(SyntaxHighlighter *p_highlighter);
 
 	virtual String get_name();
-	virtual Ref<Texture2D> get_icon();
+	virtual Ref<Texture2D> get_theme_icon();
 	virtual RES get_edited_resource() const;
 	virtual void set_edited_resource(const RES &p_res);
 	void set_edited_file(const Ref<TextFile> &p_file);

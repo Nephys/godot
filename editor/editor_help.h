@@ -88,7 +88,6 @@ public:
 };
 
 class EditorHelp : public VBoxContainer {
-
 	GDCLASS(EditorHelp, VBoxContainer);
 
 	enum Page {
@@ -192,13 +191,14 @@ public:
 	~EditorHelp();
 };
 
-class EditorHelpBit : public PanelContainer {
-
-	GDCLASS(EditorHelpBit, PanelContainer);
+class EditorHelpBit : public MarginContainer {
+	GDCLASS(EditorHelpBit, MarginContainer);
 
 	RichTextLabel *rich_text;
 	void _go_to_help(String p_what);
 	void _meta_clicked(String p_select);
+
+	String text;
 
 protected:
 	static void _bind_methods();

@@ -77,7 +77,6 @@ String SignalAwaiterCallable::get_as_text() const {
 		String class_name = base->get_class();
 		Ref<Script> script = base->get_script();
 		if (script.is_valid() && script->get_path().is_resource_file()) {
-
 			class_name += "(" + script->get_path().get_file() + ")";
 		}
 		return class_name + "::SignalAwaiterMiddleman::" + String(signal);
@@ -121,7 +120,7 @@ void SignalAwaiterCallable::call(const Variant **p_arguments, int p_argcount, Va
 		return;
 	}
 
-	MonoException *exc = NULL;
+	MonoException *exc = nullptr;
 	CACHED_METHOD_THUNK(SignalAwaiter, SignalCallback).invoke(awaiter, signal_args, &exc);
 
 	if (exc) {
@@ -210,7 +209,7 @@ void EventSignalCallable::call(const Variant **p_arguments, int p_argcount, Vari
 		return;
 	}
 
-	MonoException *exc = NULL;
+	MonoException *exc = nullptr;
 	event_signal->invoke_method->invoke(delegate_field_value, p_arguments, &exc);
 
 	if (exc) {

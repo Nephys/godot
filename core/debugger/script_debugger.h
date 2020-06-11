@@ -38,7 +38,6 @@
 #include "core/vector.h"
 
 class ScriptDebugger {
-
 	typedef ScriptLanguage::StackInfo StackInfo;
 
 	int lines_left = -1;
@@ -47,7 +46,7 @@ class ScriptDebugger {
 
 	Map<int, Set<StringName>> breakpoints;
 
-	ScriptLanguage *break_lang = NULL;
+	ScriptLanguage *break_lang = nullptr;
 	Vector<StackInfo> error_stack_info;
 
 public:

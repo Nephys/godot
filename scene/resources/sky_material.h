@@ -6,7 +6,7 @@
 /*                      https://godotengine.org                          */
 /*************************************************************************/
 /* Copyright (c) 2007-2020 Juan Linietsky, Ariel Manzur.                 */
-/* Copyright (c) 2014-2020 Godot Engine contributors (cf. AUTHORS.md)    */
+/* Copyright (c) 2014-2020 Godot Engine contributors (cf. AUTHORS.md).   */
 /*                                                                       */
 /* Permission is hereby granted, free of charge, to any person obtaining */
 /* a copy of this software and associated documentation files (the       */
@@ -35,7 +35,6 @@
 #define SKY_MATERIAL_H
 
 class ProceduralSkyMaterial : public Material {
-
 	GDCLASS(ProceduralSkyMaterial, Material);
 
 private:
@@ -49,7 +48,6 @@ private:
 	float ground_curve;
 	float ground_energy;
 
-	float sun_angle_min;
 	float sun_angle_max;
 	float sun_curve;
 
@@ -83,9 +81,6 @@ public:
 
 	void set_ground_energy(float p_energy);
 	float get_ground_energy() const;
-
-	void set_sun_angle_min(float p_angle);
-	float get_sun_angle_min() const;
 
 	void set_sun_angle_max(float p_angle);
 	float get_sun_angle_max() const;
@@ -144,6 +139,7 @@ private:
 	Color ground_color;
 	float exposure;
 	float dither_strength;
+	Ref<Texture2D> night_sky;
 
 protected:
 	static void _bind_methods();
@@ -179,6 +175,9 @@ public:
 
 	void set_dither_strength(float p_dither_strength);
 	float get_dither_strength() const;
+
+	void set_night_sky(const Ref<Texture2D> &p_night_sky);
+	Ref<Texture2D> get_night_sky() const;
 
 	virtual Shader::Mode get_shader_mode() const;
 	RID get_shader_rid() const;

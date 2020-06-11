@@ -34,7 +34,7 @@
 
 void MonoGCHandleData::release() {
 #ifdef DEBUG_ENABLED
-	CRASH_COND(handle && GDMono::get_singleton() == NULL);
+	CRASH_COND(handle && GDMono::get_singleton() == nullptr);
 #endif
 
 	if (handle && GDMono::get_singleton()->is_runtime_initialized()) {
@@ -56,11 +56,9 @@ MonoGCHandleData MonoGCHandleData::new_weak_handle(MonoObject *p_object) {
 }
 
 Ref<MonoGCHandleRef> MonoGCHandleRef::create_strong(MonoObject *p_object) {
-
 	return memnew(MonoGCHandleRef(MonoGCHandleData::new_strong_handle(p_object)));
 }
 
 Ref<MonoGCHandleRef> MonoGCHandleRef::create_weak(MonoObject *p_object) {
-
 	return memnew(MonoGCHandleRef(MonoGCHandleData::new_weak_handle(p_object)));
 }

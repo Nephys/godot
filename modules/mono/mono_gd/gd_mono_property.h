@@ -36,7 +36,6 @@
 #include "i_mono_class_member.h"
 
 class GDMonoProperty : public IMonoClassMember {
-
 	GDMonoClass *owner;
 	MonoProperty *mono_property;
 
@@ -65,9 +64,9 @@ public:
 
 	_FORCE_INLINE_ ManagedType get_type() const { return type; }
 
-	void set_value(MonoObject *p_object, MonoObject *p_value, MonoException **r_exc = NULL);
-	void set_value(MonoObject *p_object, void **p_params, MonoException **r_exc = NULL);
-	MonoObject *get_value(MonoObject *p_object, MonoException **r_exc = NULL);
+	void set_value(MonoObject *p_object, MonoObject *p_value, MonoException **r_exc = nullptr);
+	void set_value(MonoObject *p_object, void **p_params, MonoException **r_exc = nullptr);
+	MonoObject *get_value(MonoObject *p_object, MonoException **r_exc = nullptr);
 
 	bool get_bool_value(MonoObject *p_object);
 	int get_int_value(MonoObject *p_object);

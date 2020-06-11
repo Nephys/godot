@@ -118,6 +118,9 @@ MAKE_PTRARG(String);
 MAKE_PTRARG(Vector2);
 MAKE_PTRARG(Rect2);
 MAKE_PTRARG_BY_REFERENCE(Vector3);
+MAKE_PTRARG(Vector2i);
+MAKE_PTRARG(Rect2i);
+MAKE_PTRARG_BY_REFERENCE(Vector3i);
 MAKE_PTRARG(Transform2D);
 MAKE_PTRARG_BY_REFERENCE(Plane);
 MAKE_PTRARG(Quat);
@@ -147,28 +150,22 @@ MAKE_PTRARG_BY_REFERENCE(Variant);
 
 template <class T>
 struct PtrToArg<T *> {
-
 	_FORCE_INLINE_ static T *convert(const void *p_ptr) {
-
 		return const_cast<T *>(reinterpret_cast<const T *>(p_ptr));
 	}
 
 	_FORCE_INLINE_ static void encode(T *p_var, void *p_ptr) {
-
 		*((T **)p_ptr) = p_var;
 	}
 };
 
 template <class T>
 struct PtrToArg<const T *> {
-
 	_FORCE_INLINE_ static const T *convert(const void *p_ptr) {
-
 		return reinterpret_cast<const T *>(p_ptr);
 	}
 
 	_FORCE_INLINE_ static void encode(T *p_var, void *p_ptr) {
-
 		*((T **)p_ptr) = p_var;
 	}
 };
@@ -178,12 +175,10 @@ struct PtrToArg<const T *> {
 template <>
 struct PtrToArg<ObjectID> {
 	_FORCE_INLINE_ static const ObjectID convert(const void *p_ptr) {
-
 		return ObjectID(*reinterpret_cast<const uint64_t *>(p_ptr));
 	}
 
 	_FORCE_INLINE_ static void encode(const ObjectID &p_val, void *p_ptr) {
-
 		*((uint64_t *)p_ptr) = p_val;
 	}
 };
